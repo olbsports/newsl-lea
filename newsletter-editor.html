@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Éditeur Visuel de Newsletter - HorsePrint Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .app {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 320px;
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #3498db;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #95a5a6;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        .btn-success {
+            background: #27ae60;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .btn-secondary {
+            background: #7f8c8d;
+        }
+
+        .btn-secondary:hover {
+            background: #6c7a7b;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 10px;
+            border: 1px solid #34495e;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            background: #34495e;
+            color: #ecf0f1;
+            resize: vertical;
+        }
+
+        input[type="text"],
+        input[type="color"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #34495e;
+            border-radius: 5px;
+            background: #34495e;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        input[type="color"] {
+            height: 45px;
+            cursor: pointer;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 13px;
+            color: #bdc3c7;
+        }
+
+        /* NEWSLETTERS LIST */
+        .newsletters-list {
+            margin-top: 10px;
+        }
+
+        .newsletter-item {
+            background: #34495e;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .newsletter-item:hover {
+            background: #3d566e;
+        }
+
+        .newsletter-item.active {
+            background: #3498db;
+        }
+
+        .newsletter-name {
+            font-size: 14px;
+            flex: 1;
+        }
+
+        .delete-newsletter {
+            background: #e74c3c;
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .toolbar {
+            background: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .toolbar-btn {
+            padding: 8px 16px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .toolbar-btn:hover {
+            background: #2980b9;
+        }
+
+        .preview-container {
+            flex: 1;
+            overflow: auto;
+            background: #e8e8e8;
+            padding: 40px 20px;
+        }
+
+        .preview {
+            max-width: 650px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            min-height: 400px;
+        }
+
+        /* EDITABLE ELEMENTS */
+        [data-editable="true"] {
+            outline: 2px dashed transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        [data-editable="true"]:hover {
+            outline: 2px dashed #3498db;
+            background: rgba(52, 152, 219, 0.05);
+        }
+
+        [data-editable="true"].selected {
+            outline: 3px solid #3498db;
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        /* EDIT PANEL */
+        .edit-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            min-width: 400px;
+            max-width: 600px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .edit-panel.active {
+            display: block;
+        }
+
+        .edit-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .edit-panel-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .close-panel {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #95a5a6;
+        }
+
+        .close-panel:hover {
+            color: #e74c3c;
+        }
+
+        .edit-field {
+            margin-bottom: 15px;
+        }
+
+        .edit-field label {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .edit-field input,
+        .edit-field textarea {
+            background: #ecf0f1;
+            color: #2c3e50;
+            border: 1px solid #bdc3c7;
+        }
+
+        .edit-field textarea {
+            min-height: 80px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* TOAST NOTIFICATIONS */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 2000;
+            display: none;
+            animation: slideIn 0.3s;
+        }
+
+        .toast.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 300px;
+            }
+
+            .app {
+                flex-direction: column;
+            }
+
+            .edit-panel {
+                min-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="logo">📧 Newsletter Editor</div>
+
+            <!-- IMPORT HTML -->
+            <div class="section">
+                <div class="section-title">1. Importer votre HTML</div>
+                <textarea id="htmlInput" placeholder="Collez votre code HTML ici..."></textarea>
+                <button class="btn btn-success" onclick="loadHTML()">📥 Charger le HTML</button>
+            </div>
+
+            <!-- QUICK EDIT TOOLS -->
+            <div class="section">
+                <div class="section-title">2. Édition rapide</div>
+
+                <label>Couleur primaire</label>
+                <input type="color" id="primaryColor" value="#0D4AFF" onchange="changePrimaryColor(this.value)">
+
+                <label>Couleur secondaire</label>
+                <input type="color" id="secondaryColor" value="#ffffff" onchange="changeSecondaryColor(this.value)">
+
+                <label>Rechercher & remplacer</label>
+                <input type="text" id="searchText" placeholder="Texte à chercher">
+                <input type="text" id="replaceText" placeholder="Remplacer par">
+                <button class="btn" onclick="findAndReplace()">🔄 Remplacer</button>
+            </div>
+
+            <!-- NEWSLETTERS MANAGEMENT -->
+            <div class="section">
+                <div class="section-title">3. Mes newsletters</div>
+                <input type="text" id="newsletterName" placeholder="Nom de la newsletter">
+                <button class="btn btn-success" onclick="saveNewsletter()">💾 Sauvegarder</button>
+                <div class="newsletters-list" id="newslettersList"></div>
+            </div>
+
+            <!-- EXPORT -->
+            <div class="section">
+                <div class="section-title">4. Exporter</div>
+                <button class="btn" onclick="copyToClipboard()">📋 Copier le HTML</button>
+                <button class="btn btn-secondary" onclick="downloadHTML()">⬇️ Télécharger</button>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="toolbar">
+                <button class="toolbar-btn" onclick="enableEditMode()">✏️ Mode édition</button>
+                <button class="toolbar-btn" onclick="resetView()">🔄 Réinitialiser</button>
+                <span style="flex: 1;"></span>
+                <span id="status" style="color: #95a5a6; font-size: 13px;">Cliquez sur un élément pour l'éditer</span>
+            </div>
+
+            <div class="preview-container">
+                <div class="preview" id="preview">
+                    <div style="padding: 40px; text-align: center; color: #95a5a6;">
+                        <h2>👆 Collez votre HTML dans la barre latérale</h2>
+                        <p style="margin-top: 10px;">Puis cliquez sur "Charger le HTML"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT PANEL -->
+    <div class="overlay" id="overlay" onclick="closeEditPanel()"></div>
+    <div class="edit-panel" id="editPanel">
+        <div class="edit-panel-header">
+            <div class="edit-panel-title">Éditer l'élément</div>
+            <button class="close-panel" onclick="closeEditPanel()">×</button>
+        </div>
+        <div id="editFields"></div>
+        <button class="btn btn-success" onclick="saveEdit()">✅ Enregistrer</button>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let currentElement = null;
+        let newsletters = JSON.parse(localStorage.getItem('newsletters') || '{}');
+        let currentNewsletterId = null;
+
+        // LOAD HTML
+        function loadHTML() {
+            const html = document.getElementById('htmlInput').value;
+            if (!html.trim()) {
+                showToast('⚠️ Veuillez coller du code HTML', 'warning');
+                return;
+            }
+
+            const preview = document.getElementById('preview');
+            preview.innerHTML = html;
+            makeElementsEditable();
+            showToast('✅ HTML chargé avec succès !');
+        }
+
+        // MAKE ELEMENTS EDITABLE
+        function makeElementsEditable() {
+            const preview = document.getElementById('preview');
+
+            // Textes éditables
+            const textElements = preview.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span, div, a, button, td, th, li');
+            textElements.forEach(el => {
+                if (el.children.length === 0 || el.textContent.trim().length > 0) {
+                    el.setAttribute('data-editable', 'true');
+                    el.setAttribute('data-type', 'text');
+                    el.onclick = (e) => {
+                        e.stopPropagation();
+                        editElement(el);
+                    };
+                }
+            });
+
+            // Images éditables
+            const images = preview.querySelectorAll('img');
+            images.forEach(img => {
+                img.setAttribute('data-editable', 'true');
+                img.setAttribute('data-type', 'image');
+                img.onclick = (e) => {
+                    e.stopPropagation();
+                    editElement(img);
+                };
+            });
+
+            // Liens éditables
+            const links = preview.querySelectorAll('a');
+            links.forEach(link => {
+                link.setAttribute('data-editable', 'true');
+                link.setAttribute('data-type', 'link');
+            });
+        }
+
+        // EDIT ELEMENT
+        function editElement(element) {
+            // Remove previous selection
+            document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+
+            currentElement = element;
+            const type = element.getAttribute('data-type');
+            const editFields = document.getElementById('editFields');
+            editFields.innerHTML = '';
+
+            if (type === 'text' || type === 'link') {
+                // Text content
+                editFields.innerHTML += `
+                    <div class="edit-field">
+                        <label>Texte</label>
+                        <textarea id="editText">${element.textContent}</textarea>
+                    </div>
+                `;
+
+                // If link, add href
+                if (type === 'link') {
+                    editFields.innerHTML += `
+                        <div class="edit-field">
+                            <label>Lien (URL)</label>
+                            <input type="text" id="editHref" value="${element.href || ''}">
+                        </div>
+                    `;
+                }
+
+                // Color
+                const color = window.getComputedStyle(element).color;
+                editFields.innerHTML += `
+                    <div class="edit-field">
+                        <label>Couleur du texte</label>
+                        <input type="color" id="editColor" value="${rgbToHex(color)}">
+                    </div>
+                `;
+
+                // Background
+                const bgColor = window.getComputedStyle(element).backgroundColor;
+                editFields.innerHTML += `
+                    <div class="edit-field">
+                        <label>Couleur de fond</label>
+                        <input type="color" id="editBgColor" value="${rgbToHex(bgColor)}">
+                    </div>
+                `;
+
+                // Font size
+                const fontSize = parseInt(window.getComputedStyle(element).fontSize);
+                editFields.innerHTML += `
+                    <div class="edit-field">
+                        <label>Taille de police (px)</label>
+                        <input type="number" id="editFontSize" value="${fontSize}" min="8" max="72">
+                    </div>
+                `;
+
+                // Padding
+                const padding = parseInt(window.getComputedStyle(element).padding);
+                editFields.innerHTML += `
+                    <div class="edit-field">
+                        <label>Espacement interne (px)</label>
+                        <input type="number" id="editPadding" value="${padding || 0}" min="0" max="100">
+                    </div>
+                `;
+            } else if (type === 'image') {
+                editFields.innerHTML += `
+                    <div class="edit-field">
+                        <label>URL de l'image</label>
+                        <input type="text" id="editImageSrc" value="${element.src}">
+                    </div>
+                    <div class="edit-field">
+                        <label>Texte alternatif</label>
+                        <input type="text" id="editImageAlt" value="${element.alt || ''}">
+                    </div>
+                    <div class="edit-field">
+                        <label>Largeur (px ou %)</label>
+                        <input type="text" id="editImageWidth" value="${element.style.width || '100%'}">
+                    </div>
+                `;
+            }
+
+            document.getElementById('overlay').classList.add('active');
+            document.getElementById('editPanel').classList.add('active');
+        }
+
+        // SAVE EDIT
+        function saveEdit() {
+            if (!currentElement) return;
+
+            const type = currentElement.getAttribute('data-type');
+
+            if (type === 'text' || type === 'link') {
+                const newText = document.getElementById('editText').value;
+                currentElement.textContent = newText;
+
+                if (type === 'link') {
+                    const newHref = document.getElementById('editHref').value;
+                    currentElement.href = newHref;
+                }
+
+                const newColor = document.getElementById('editColor').value;
+                currentElement.style.color = newColor;
+
+                const newBgColor = document.getElementById('editBgColor').value;
+                currentElement.style.backgroundColor = newBgColor;
+
+                const newFontSize = document.getElementById('editFontSize').value;
+                currentElement.style.fontSize = newFontSize + 'px';
+
+                const newPadding = document.getElementById('editPadding').value;
+                currentElement.style.padding = newPadding + 'px';
+
+            } else if (type === 'image') {
+                const newSrc = document.getElementById('editImageSrc').value;
+                currentElement.src = newSrc;
+
+                const newAlt = document.getElementById('editImageAlt').value;
+                currentElement.alt = newAlt;
+
+                const newWidth = document.getElementById('editImageWidth').value;
+                currentElement.style.width = newWidth;
+            }
+
+            closeEditPanel();
+            showToast('✅ Modifications enregistrées !');
+        }
+
+        // CLOSE EDIT PANEL
+        function closeEditPanel() {
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('editPanel').classList.remove('active');
+            if (currentElement) {
+                currentElement.classList.remove('selected');
+            }
+            currentElement = null;
+        }
+
+        // CHANGE PRIMARY COLOR
+        function changePrimaryColor(color) {
+            const preview = document.getElementById('preview');
+            const elements = preview.querySelectorAll('[style*="color"], [style*="background"]');
+
+            elements.forEach(el => {
+                const style = el.style.cssText;
+                if (style.includes('#0D4AFF') || style.includes('rgb(13, 74, 255)')) {
+                    el.style.cssText = style.replace(/#0D4AFF/gi, color).replace(/rgb\(13,\s*74,\s*255\)/gi, color);
+                }
+            });
+
+            showToast('🎨 Couleur primaire changée !');
+        }
+
+        // CHANGE SECONDARY COLOR
+        function changeSecondaryColor(color) {
+            const preview = document.getElementById('preview');
+            const elements = preview.querySelectorAll('[style*="background"]');
+
+            elements.forEach(el => {
+                const bgColor = window.getComputedStyle(el).backgroundColor;
+                if (bgColor === 'rgb(255, 255, 255)' || bgColor === 'rgba(255, 255, 255, 1)') {
+                    el.style.backgroundColor = color;
+                }
+            });
+
+            showToast('🎨 Couleur secondaire changée !');
+        }
+
+        // FIND AND REPLACE
+        function findAndReplace() {
+            const search = document.getElementById('searchText').value;
+            const replace = document.getElementById('replaceText').value;
+
+            if (!search) {
+                showToast('⚠️ Entrez un texte à rechercher', 'warning');
+                return;
+            }
+
+            const preview = document.getElementById('preview');
+            let count = 0;
+
+            function replaceInNode(node) {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    const newText = node.textContent.replace(new RegExp(search, 'gi'), replace);
+                    if (newText !== node.textContent) {
+                        node.textContent = newText;
+                        count++;
+                    }
+                } else {
+                    node.childNodes.forEach(replaceInNode);
+                }
+            }
+
+            replaceInNode(preview);
+            showToast(`✅ ${count} remplacement(s) effectué(s) !`);
+        }
+
+        // SAVE NEWSLETTER
+        function saveNewsletter() {
+            const name = document.getElementById('newsletterName').value;
+            if (!name.trim()) {
+                showToast('⚠️ Donnez un nom à votre newsletter', 'warning');
+                return;
+            }
+
+            const html = document.getElementById('preview').innerHTML;
+            const id = Date.now().toString();
+
+            newsletters[id] = {
+                id: id,
+                name: name,
+                html: html,
+                date: new Date().toISOString()
+            };
+
+            localStorage.setItem('newsletters', JSON.stringify(newsletters));
+            document.getElementById('newsletterName').value = '';
+            loadNewslettersList();
+            showToast('💾 Newsletter sauvegardée !');
+        }
+
+        // LOAD NEWSLETTERS LIST
+        function loadNewslettersList() {
+            const list = document.getElementById('newslettersList');
+            list.innerHTML = '';
+
+            Object.values(newsletters).sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(newsletter => {
+                const item = document.createElement('div');
+                item.className = 'newsletter-item';
+                if (currentNewsletterId === newsletter.id) {
+                    item.classList.add('active');
+                }
+
+                item.innerHTML = `
+                    <div class="newsletter-name">${newsletter.name}</div>
+                    <button class="delete-newsletter" onclick="deleteNewsletter('${newsletter.id}', event)">×</button>
+                `;
+
+                item.onclick = () => loadNewsletterById(newsletter.id);
+                list.appendChild(item);
+            });
+        }
+
+        // LOAD NEWSLETTER BY ID
+        function loadNewsletterById(id) {
+            const newsletter = newsletters[id];
+            if (newsletter) {
+                document.getElementById('preview').innerHTML = newsletter.html;
+                makeElementsEditable();
+                currentNewsletterId = id;
+                loadNewslettersList();
+                showToast(`📧 ${newsletter.name} chargée !`);
+            }
+        }
+
+        // DELETE NEWSLETTER
+        function deleteNewsletter(id, event) {
+            event.stopPropagation();
+            if (confirm('Supprimer cette newsletter ?')) {
+                delete newsletters[id];
+                localStorage.setItem('newsletters', JSON.stringify(newsletters));
+                if (currentNewsletterId === id) {
+                    currentNewsletterId = null;
+                    document.getElementById('preview').innerHTML = '<div style="padding: 40px; text-align: center; color: #95a5a6;"><h2>Newsletter supprimée</h2></div>';
+                }
+                loadNewslettersList();
+                showToast('🗑️ Newsletter supprimée');
+            }
+        }
+
+        // COPY TO CLIPBOARD
+        function copyToClipboard() {
+            const html = document.getElementById('preview').innerHTML;
+            navigator.clipboard.writeText(html).then(() => {
+                showToast('📋 HTML copié dans le presse-papier !');
+            });
+        }
+
+        // DOWNLOAD HTML
+        function downloadHTML() {
+            const html = document.getElementById('preview').innerHTML;
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `newsletter_${Date.now()}.html`;
+            a.click();
+            showToast('⬇️ HTML téléchargé !');
+        }
+
+        // RESET VIEW
+        function resetView() {
+            if (confirm('Réinitialiser la vue ? (Les modifications non sauvegardées seront perdues)')) {
+                document.getElementById('preview').innerHTML = '<div style="padding: 40px; text-align: center; color: #95a5a6;"><h2>👆 Collez votre HTML dans la barre latérale</h2></div>';
+                document.getElementById('htmlInput').value = '';
+                currentNewsletterId = null;
+                loadNewslettersList();
+            }
+        }
+
+        // ENABLE EDIT MODE
+        function enableEditMode() {
+            showToast('✏️ Mode édition activé - Cliquez sur un élément');
+        }
+
+        // SHOW TOAST
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.background = type === 'warning' ? '#f39c12' : '#27ae60';
+            toast.classList.add('active');
+
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
+
+        // RGB TO HEX
+        function rgbToHex(rgb) {
+            if (!rgb || rgb === 'rgba(0, 0, 0, 0)') return '#ffffff';
+            const matches = rgb.match(/\d+/g);
+            if (!matches) return '#000000';
+            return '#' + matches.slice(0, 3).map(x => {
+                const hex = parseInt(x).toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            }).join('');
+        }
+
+        // INIT
+        loadNewslettersList();
+    </script>
+</body>
+</html>
