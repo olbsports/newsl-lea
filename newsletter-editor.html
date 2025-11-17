@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Éditeur Visuel de Newsletter - HorsePrint Pro</title>
+    <title>Éditeur Newsletter Pro - HorsePrint</title>
     <style>
         * {
             margin: 0;
@@ -25,7 +25,7 @@
 
         /* SIDEBAR */
         .sidebar {
-            width: 320px;
+            width: 340px;
             background: #2c3e50;
             color: white;
             padding: 20px;
@@ -36,38 +36,52 @@
         .logo {
             font-size: 20px;
             font-weight: bold;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             color: #3498db;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .section {
             margin-bottom: 25px;
+            background: #34495e;
+            padding: 15px;
+            border-radius: 8px;
         }
 
         .section-title {
             font-size: 12px;
             text-transform: uppercase;
-            color: #95a5a6;
+            color: #3498db;
             margin-bottom: 10px;
-            font-weight: 600;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             background: #3498db;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .btn:hover {
             background: #2980b9;
+            transform: translateY(-1px);
         }
 
         .btn-success {
@@ -94,29 +108,40 @@
             background: #6c7a7b;
         }
 
+        .btn-warning {
+            background: #f39c12;
+        }
+
+        .btn-warning:hover {
+            background: #e67e22;
+        }
+
         textarea {
             width: 100%;
-            min-height: 100px;
+            min-height: 80px;
             padding: 10px;
-            border: 1px solid #34495e;
+            border: 1px solid #2c3e50;
             border-radius: 5px;
             font-family: 'Courier New', monospace;
             font-size: 12px;
-            background: #34495e;
+            background: #2c3e50;
             color: #ecf0f1;
             resize: vertical;
+            margin-bottom: 10px;
         }
 
         input[type="text"],
         input[type="color"],
-        input[type="number"] {
+        input[type="number"],
+        select {
             width: 100%;
             padding: 10px;
-            border: 1px solid #34495e;
+            border: 1px solid #2c3e50;
             border-radius: 5px;
-            background: #34495e;
+            background: #2c3e50;
             color: white;
             margin-bottom: 10px;
+            font-size: 13px;
         }
 
         input[type="color"] {
@@ -127,20 +152,34 @@
         label {
             display: block;
             margin-bottom: 5px;
-            font-size: 13px;
+            font-size: 12px;
             color: #bdc3c7;
+            font-weight: 600;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
         }
 
         /* NEWSLETTERS LIST */
         .newsletters-list {
             margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
         }
 
         .newsletter-item {
-            background: #34495e;
-            padding: 12px;
+            background: #2c3e50;
+            padding: 10px;
             border-radius: 5px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -157,7 +196,7 @@
         }
 
         .newsletter-name {
-            font-size: 14px;
+            font-size: 13px;
             flex: 1;
         }
 
@@ -165,8 +204,8 @@
             background: #e74c3c;
             border: none;
             color: white;
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             border-radius: 3px;
             cursor: pointer;
             font-size: 16px;
@@ -181,26 +220,61 @@
 
         .toolbar {
             background: white;
-            padding: 15px 20px;
+            padding: 12px 20px;
             border-bottom: 1px solid #ddd;
             display: flex;
-            gap: 10px;
+            gap: 8px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .toolbar-btn {
-            padding: 8px 16px;
+            padding: 8px 14px;
             background: #3498db;
             color: white;
             border: none;
-            border-radius: 3px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .toolbar-btn:hover {
             background: #2980b9;
+        }
+
+        .toolbar-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        .zoom-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #ecf0f1;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .zoom-btn {
+            background: white;
+            border: 1px solid #bdc3c7;
+            color: #2c3e50;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .zoom-level {
+            font-size: 12px;
+            color: #7f8c8d;
+            min-width: 50px;
+            text-align: center;
         }
 
         .preview-container {
@@ -216,24 +290,38 @@
             background: white;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             min-height: 400px;
+            transform-origin: top center;
+            transition: transform 0.2s;
         }
 
         /* EDITABLE ELEMENTS */
         [data-editable="true"] {
             outline: 2px dashed transparent;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: outline 0.2s;
             position: relative;
+        }
+
+        [data-editable="true"]:hover::before {
+            content: '✏️';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            background: #3498db;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            z-index: 10;
         }
 
         [data-editable="true"]:hover {
             outline: 2px dashed #3498db;
-            background: rgba(52, 152, 219, 0.05);
         }
 
         [data-editable="true"].selected {
-            outline: 3px solid #3498db;
-            background: rgba(52, 152, 219, 0.1);
+            outline: 3px solid #e74c3c;
+            outline-offset: 2px;
         }
 
         /* EDIT PANEL */
@@ -245,9 +333,11 @@
             background: white;
             padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            min-width: 400px;
-            max-width: 600px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.4);
+            min-width: 500px;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
             z-index: 1000;
             display: none;
         }
@@ -261,6 +351,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
         }
 
         .edit-panel-title {
@@ -272,9 +364,10 @@
         .close-panel {
             background: none;
             border: none;
-            font-size: 24px;
+            font-size: 28px;
             cursor: pointer;
             color: #95a5a6;
+            line-height: 1;
         }
 
         .close-panel:hover {
@@ -288,11 +381,15 @@
         .edit-field label {
             color: #2c3e50;
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .edit-field input,
-        .edit-field textarea {
+        .edit-field textarea,
+        .edit-field select {
             background: #ecf0f1;
             color: #2c3e50;
             border: 1px solid #bdc3c7;
@@ -302,13 +399,33 @@
             min-height: 80px;
         }
 
+        .edit-field input:focus,
+        .edit-field textarea:focus,
+        .edit-field select:focus {
+            outline: 2px solid #3498db;
+            border-color: #3498db;
+        }
+
+        .spacing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .panel-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 999;
             display: none;
         }
@@ -326,14 +443,23 @@
             color: white;
             padding: 15px 20px;
             border-radius: 5px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             z-index: 2000;
             display: none;
             animation: slideIn 0.3s;
+            max-width: 400px;
         }
 
         .toast.active {
             display: block;
+        }
+
+        .toast.warning {
+            background: #f39c12;
+        }
+
+        .toast.error {
+            background: #e74c3c;
         }
 
         @keyframes slideIn {
@@ -345,6 +471,22 @@
                 transform: translateX(0);
                 opacity: 1;
             }
+        }
+
+        .help-text {
+            font-size: 11px;
+            color: #95a5a6;
+            margin-top: 3px;
+            font-weight: normal;
+        }
+
+        .stats {
+            background: #34495e;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 11px;
+            color: #bdc3c7;
+            margin-top: 10px;
         }
 
         /* RESPONSIVE */
@@ -369,44 +511,52 @@
     <div class="app">
         <!-- SIDEBAR -->
         <div class="sidebar">
-            <div class="logo">📧 Newsletter Editor</div>
+            <div class="logo">
+                <span>✨</span>
+                <span>Newsletter Editor Pro</span>
+            </div>
 
             <!-- IMPORT HTML -->
             <div class="section">
-                <div class="section-title">1. Importer votre HTML</div>
+                <div class="section-title">📥 1. Importer HTML</div>
                 <textarea id="htmlInput" placeholder="Collez votre code HTML ici..."></textarea>
-                <button class="btn btn-success" onclick="loadHTML()">📥 Charger le HTML</button>
+                <button class="btn btn-success" onclick="loadHTML()">Charger le HTML</button>
             </div>
 
-            <!-- QUICK EDIT TOOLS -->
+            <!-- QUICK TOOLS -->
             <div class="section">
-                <div class="section-title">2. Édition rapide</div>
+                <div class="section-title">🔧 2. Outils rapides</div>
 
-                <label>Couleur primaire</label>
-                <input type="color" id="primaryColor" value="#0D4AFF" onchange="changePrimaryColor(this.value)">
-
-                <label>Couleur secondaire</label>
-                <input type="color" id="secondaryColor" value="#ffffff" onchange="changeSecondaryColor(this.value)">
-
-                <label>Rechercher & remplacer</label>
+                <label>Rechercher</label>
                 <input type="text" id="searchText" placeholder="Texte à chercher">
+
+                <label>Remplacer par</label>
                 <input type="text" id="replaceText" placeholder="Remplacer par">
-                <button class="btn" onclick="findAndReplace()">🔄 Remplacer</button>
+
+                <button class="btn" onclick="findAndReplace()">🔄 Tout remplacer</button>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px;">
+                    <button class="btn btn-warning" onclick="undoAction()">↶ Annuler</button>
+                    <button class="btn btn-warning" onclick="redoAction()">↷ Refaire</button>
+                </div>
             </div>
 
             <!-- NEWSLETTERS MANAGEMENT -->
             <div class="section">
-                <div class="section-title">3. Mes newsletters</div>
+                <div class="section-title">💾 3. Mes newsletters</div>
                 <input type="text" id="newsletterName" placeholder="Nom de la newsletter">
-                <button class="btn btn-success" onclick="saveNewsletter()">💾 Sauvegarder</button>
+                <button class="btn btn-success" onclick="saveNewsletter()">Sauvegarder</button>
                 <div class="newsletters-list" id="newslettersList"></div>
             </div>
 
             <!-- EXPORT -->
             <div class="section">
-                <div class="section-title">4. Exporter</div>
-                <button class="btn" onclick="copyToClipboard()">📋 Copier le HTML</button>
-                <button class="btn btn-secondary" onclick="downloadHTML()">⬇️ Télécharger</button>
+                <div class="section-title">📤 4. Exporter</div>
+                <button class="btn" onclick="copyToClipboard()">📋 Copier HTML</button>
+                <button class="btn btn-secondary" onclick="downloadHTML()">⬇️ Télécharger .html</button>
+                <div class="stats" id="stats">
+                    Taille: 0 KB | Éléments: 0
+                </div>
             </div>
         </div>
 
@@ -414,16 +564,29 @@
         <div class="main-content">
             <div class="toolbar">
                 <button class="toolbar-btn" onclick="enableEditMode()">✏️ Mode édition</button>
+                <button class="toolbar-btn" id="undoBtn" onclick="undoAction()" disabled>↶ Annuler</button>
+                <button class="toolbar-btn" id="redoBtn" onclick="redoAction()" disabled>↷ Refaire</button>
                 <button class="toolbar-btn" onclick="resetView()">🔄 Réinitialiser</button>
-                <span style="flex: 1;"></span>
-                <span id="status" style="color: #95a5a6; font-size: 13px;">Cliquez sur un élément pour l'éditer</span>
+
+                <div style="flex: 1;"></div>
+
+                <div class="zoom-control">
+                    <button class="zoom-btn" onclick="zoomOut()">-</button>
+                    <span class="zoom-level" id="zoomLevel">100%</span>
+                    <button class="zoom-btn" onclick="zoomIn()">+</button>
+                </div>
+
+                <span id="status" style="color: #95a5a6; font-size: 12px;">👆 Cliquez sur un élément</span>
             </div>
 
             <div class="preview-container">
                 <div class="preview" id="preview">
-                    <div style="padding: 40px; text-align: center; color: #95a5a6;">
-                        <h2>👆 Collez votre HTML dans la barre latérale</h2>
-                        <p style="margin-top: 10px;">Puis cliquez sur "Charger le HTML"</p>
+                    <div style="padding: 60px 40px; text-align: center; color: #95a5a6;">
+                        <h2 style="font-size: 32px; margin-bottom: 20px;">👋 Bienvenue dans l'éditeur Pro</h2>
+                        <p style="margin-top: 10px; font-size: 16px;">1️⃣ Collez votre HTML dans la barre latérale</p>
+                        <p style="margin-top: 8px; font-size: 16px;">2️⃣ Cliquez sur "Charger le HTML"</p>
+                        <p style="margin-top: 8px; font-size: 16px;">3️⃣ Cliquez sur n'importe quel élément pour l'éditer</p>
+                        <p style="margin-top: 20px; font-size: 14px; color: #bdc3c7;">✨ Fonctionnalités: Suppression • Police • Espacement • Bordures • Et bien plus !</p>
                     </div>
                 </div>
             </div>
@@ -434,11 +597,10 @@
     <div class="overlay" id="overlay" onclick="closeEditPanel()"></div>
     <div class="edit-panel" id="editPanel">
         <div class="edit-panel-header">
-            <div class="edit-panel-title">Éditer l'élément</div>
+            <div class="edit-panel-title">✏️ Éditer l'élément</div>
             <button class="close-panel" onclick="closeEditPanel()">×</button>
         </div>
         <div id="editFields"></div>
-        <button class="btn btn-success" onclick="saveEdit()">✅ Enregistrer</button>
     </div>
 
     <!-- TOAST NOTIFICATION -->
@@ -446,8 +608,12 @@
 
     <script>
         let currentElement = null;
+        let originalStyles = {};
         let newsletters = JSON.parse(localStorage.getItem('newsletters') || '{}');
         let currentNewsletterId = null;
+        let history = [];
+        let historyIndex = -1;
+        let zoomLevel = 100;
 
         // LOAD HTML
         function loadHTML() {
@@ -457,9 +623,11 @@
                 return;
             }
 
+            saveToHistory();
             const preview = document.getElementById('preview');
             preview.innerHTML = html;
             makeElementsEditable();
+            updateStats();
             showToast('✅ HTML chargé avec succès !');
         }
 
@@ -468,13 +636,15 @@
             const preview = document.getElementById('preview');
 
             // Textes éditables
-            const textElements = preview.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span, div, a, button, td, th, li');
+            const textElements = preview.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span, div, a, button, td, th, li, label');
             textElements.forEach(el => {
-                if (el.children.length === 0 || el.textContent.trim().length > 0) {
+                const hasDirectText = Array.from(el.childNodes).some(node => node.nodeType === 3 && node.textContent.trim());
+                if (hasDirectText || (el.children.length === 0 && el.textContent.trim())) {
                     el.setAttribute('data-editable', 'true');
-                    el.setAttribute('data-type', 'text');
+                    el.setAttribute('data-type', el.tagName === 'A' ? 'link' : 'text');
                     el.onclick = (e) => {
                         e.stopPropagation();
+                        e.preventDefault();
                         editElement(el);
                     };
                 }
@@ -487,21 +657,19 @@
                 img.setAttribute('data-type', 'image');
                 img.onclick = (e) => {
                     e.stopPropagation();
+                    e.preventDefault();
                     editElement(img);
                 };
             });
+        }
 
-            // Liens éditables
-            const links = preview.querySelectorAll('a');
-            links.forEach(link => {
-                link.setAttribute('data-editable', 'true');
-                link.setAttribute('data-type', 'link');
-            });
+        // GET ACTUAL STYLE VALUE
+        function getActualStyle(element, property) {
+            return element.style[property] || '';
         }
 
         // EDIT ELEMENT
         function editElement(element) {
-            // Remove previous selection
             document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
             element.classList.add('selected');
 
@@ -510,121 +678,406 @@
             const editFields = document.getElementById('editFields');
             editFields.innerHTML = '';
 
+            // COMMON: DELETE BUTTON
+            editFields.innerHTML += `
+                <button class="btn btn-danger" onclick="deleteElement()" style="margin-bottom: 20px;">
+                    🗑️ Supprimer cet élément
+                </button>
+            `;
+
             if (type === 'text' || type === 'link') {
-                // Text content
+                // TEXT CONTENT
                 editFields.innerHTML += `
                     <div class="edit-field">
-                        <label>Texte</label>
+                        <label>📝 Texte</label>
                         <textarea id="editText">${element.textContent}</textarea>
                     </div>
                 `;
 
-                // If link, add href
+                // LINK HREF
                 if (type === 'link') {
                     editFields.innerHTML += `
                         <div class="edit-field">
-                            <label>Lien (URL)</label>
+                            <label>🔗 URL du lien</label>
                             <input type="text" id="editHref" value="${element.href || ''}">
                         </div>
                     `;
                 }
 
-                // Color
-                const color = window.getComputedStyle(element).color;
+                // FONT FAMILY
+                const currentFont = getActualStyle(element, 'fontFamily');
                 editFields.innerHTML += `
                     <div class="edit-field">
-                        <label>Couleur du texte</label>
-                        <input type="color" id="editColor" value="${rgbToHex(color)}">
+                        <label>🔤 Police de caractères</label>
+                        <select id="editFontFamily">
+                            <option value="">-- Par défaut --</option>
+                            <option value="Arial, sans-serif" ${currentFont.includes('Arial') ? 'selected' : ''}>Arial</option>
+                            <option value="'Times New Roman', serif" ${currentFont.includes('Times') ? 'selected' : ''}>Times New Roman</option>
+                            <option value="Georgia, serif" ${currentFont.includes('Georgia') ? 'selected' : ''}>Georgia</option>
+                            <option value="'Courier New', monospace" ${currentFont.includes('Courier') ? 'selected' : ''}>Courier New</option>
+                            <option value="Verdana, sans-serif" ${currentFont.includes('Verdana') ? 'selected' : ''}>Verdana</option>
+                            <option value="'Trebuchet MS', sans-serif" ${currentFont.includes('Trebuchet') ? 'selected' : ''}>Trebuchet MS</option>
+                            <option value="'Comic Sans MS', cursive" ${currentFont.includes('Comic') ? 'selected' : ''}>Comic Sans MS</option>
+                            <option value="Impact, sans-serif" ${currentFont.includes('Impact') ? 'selected' : ''}>Impact</option>
+                            <option value="'Palatino Linotype', serif" ${currentFont.includes('Palatino') ? 'selected' : ''}>Palatino</option>
+                            <option value="'Lucida Console', monospace" ${currentFont.includes('Lucida') ? 'selected' : ''}>Lucida Console</option>
+                            <option value="'Inter', sans-serif" ${currentFont.includes('Inter') ? 'selected' : ''}>Inter</option>
+                        </select>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyFont" ${currentFont ? 'checked' : ''}>
+                            <label for="applyFont">Appliquer la police</label>
+                        </div>
                     </div>
                 `;
 
-                // Background
-                const bgColor = window.getComputedStyle(element).backgroundColor;
+                // FONT SIZE
+                const currentFontSize = getActualStyle(element, 'fontSize');
+                const fontSize = parseInt(currentFontSize) || 16;
                 editFields.innerHTML += `
                     <div class="edit-field">
-                        <label>Couleur de fond</label>
-                        <input type="color" id="editBgColor" value="${rgbToHex(bgColor)}">
+                        <label>📏 Taille de police (${fontSize}px)</label>
+                        <input type="range" id="editFontSize" min="8" max="72" value="${fontSize}"
+                               oninput="document.getElementById('fontSizeValue').textContent = this.value + 'px'">
+                        <div style="display: flex; justify-content: space-between; font-size: 11px; color: #7f8c8d;">
+                            <span>8px</span>
+                            <span id="fontSizeValue">${fontSize}px</span>
+                            <span>72px</span>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyFontSize" ${currentFontSize ? 'checked' : ''}>
+                            <label for="applyFontSize">Modifier la taille</label>
+                        </div>
                     </div>
                 `;
 
-                // Font size
-                const fontSize = parseInt(window.getComputedStyle(element).fontSize);
+                // FONT WEIGHT
+                const currentWeight = getActualStyle(element, 'fontWeight');
                 editFields.innerHTML += `
                     <div class="edit-field">
-                        <label>Taille de police (px)</label>
-                        <input type="number" id="editFontSize" value="${fontSize}" min="8" max="72">
+                        <label>💪 Graisse de police</label>
+                        <select id="editFontWeight">
+                            <option value="">-- Par défaut --</option>
+                            <option value="300" ${currentWeight === '300' ? 'selected' : ''}>300 - Light</option>
+                            <option value="400" ${currentWeight === '400' || currentWeight === 'normal' ? 'selected' : ''}>400 - Normal</option>
+                            <option value="500" ${currentWeight === '500' ? 'selected' : ''}>500 - Medium</option>
+                            <option value="600" ${currentWeight === '600' ? 'selected' : ''}>600 - Semi-bold</option>
+                            <option value="700" ${currentWeight === '700' || currentWeight === 'bold' ? 'selected' : ''}>700 - Bold</option>
+                            <option value="800" ${currentWeight === '800' ? 'selected' : ''}>800 - Extra-bold</option>
+                            <option value="900" ${currentWeight === '900' ? 'selected' : ''}>900 - Black</option>
+                        </select>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyFontWeight" ${currentWeight ? 'checked' : ''}>
+                            <label for="applyFontWeight">Appliquer la graisse</label>
+                        </div>
                     </div>
                 `;
 
-                // Padding
-                const padding = parseInt(window.getComputedStyle(element).padding);
+                // TEXT ALIGN
+                const currentAlign = getActualStyle(element, 'textAlign');
                 editFields.innerHTML += `
                     <div class="edit-field">
-                        <label>Espacement interne (px)</label>
-                        <input type="number" id="editPadding" value="${padding || 0}" min="0" max="100">
+                        <label>↔️ Alignement du texte</label>
+                        <select id="editTextAlign">
+                            <option value="">-- Par défaut --</option>
+                            <option value="left" ${currentAlign === 'left' ? 'selected' : ''}>⬅️ Gauche</option>
+                            <option value="center" ${currentAlign === 'center' ? 'selected' : ''}>↔️ Centre</option>
+                            <option value="right" ${currentAlign === 'right' ? 'selected' : ''}>➡️ Droite</option>
+                            <option value="justify" ${currentAlign === 'justify' ? 'selected' : ''}>⬌ Justifié</option>
+                        </select>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyTextAlign" ${currentAlign ? 'checked' : ''}>
+                            <label for="applyTextAlign">Appliquer l'alignement</label>
+                        </div>
                     </div>
                 `;
+
+                // COLOR
+                const currentColor = getActualStyle(element, 'color');
+                const colorValue = rgbToHex(currentColor) || '#000000';
+                editFields.innerHTML += `
+                    <div class="edit-field">
+                        <label>🎨 Couleur du texte</label>
+                        <input type="color" id="editColor" value="${colorValue}">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyColor" ${currentColor ? 'checked' : ''}>
+                            <label for="applyColor">Appliquer la couleur</label>
+                        </div>
+                    </div>
+                `;
+
+                // BACKGROUND COLOR
+                const currentBg = getActualStyle(element, 'backgroundColor');
+                const bgValue = rgbToHex(currentBg) || '#ffffff';
+                editFields.innerHTML += `
+                    <div class="edit-field">
+                        <label>🖌️ Couleur de fond</label>
+                        <input type="color" id="editBgColor" value="${bgValue}">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyBgColor" ${currentBg ? 'checked' : ''}>
+                            <label for="applyBgColor">Appliquer la couleur de fond</label>
+                        </div>
+                    </div>
+                `;
+
+                // PADDING (ESPACEMENT INTERNE)
+                editFields.innerHTML += `
+                    <div class="edit-field">
+                        <label>📐 Espacement interne (Padding)</label>
+                        <div class="spacing-grid">
+                            <div>
+                                <label style="font-size: 11px;">⬆️ Haut (px)</label>
+                                <input type="number" id="paddingTop" value="${parseInt(getActualStyle(element, 'paddingTop')) || 0}" min="0">
+                            </div>
+                            <div>
+                                <label style="font-size: 11px;">➡️ Droite (px)</label>
+                                <input type="number" id="paddingRight" value="${parseInt(getActualStyle(element, 'paddingRight')) || 0}" min="0">
+                            </div>
+                            <div>
+                                <label style="font-size: 11px;">⬇️ Bas (px)</label>
+                                <input type="number" id="paddingBottom" value="${parseInt(getActualStyle(element, 'paddingBottom')) || 0}" min="0">
+                            </div>
+                            <div>
+                                <label style="font-size: 11px;">⬅️ Gauche (px)</label>
+                                <input type="number" id="paddingLeft" value="${parseInt(getActualStyle(element, 'paddingLeft')) || 0}" min="0">
+                            </div>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyPadding" ${getActualStyle(element, 'padding') ? 'checked' : ''}>
+                            <label for="applyPadding">Modifier le padding</label>
+                        </div>
+                    </div>
+                `;
+
+                // MARGIN (ESPACEMENT EXTERNE)
+                editFields.innerHTML += `
+                    <div class="edit-field">
+                        <label>📏 Espacement externe (Margin)</label>
+                        <div class="spacing-grid">
+                            <div>
+                                <label style="font-size: 11px;">⬆️ Haut (px)</label>
+                                <input type="number" id="marginTop" value="${parseInt(getActualStyle(element, 'marginTop')) || 0}">
+                            </div>
+                            <div>
+                                <label style="font-size: 11px;">➡️ Droite (px)</label>
+                                <input type="number" id="marginRight" value="${parseInt(getActualStyle(element, 'marginRight')) || 0}">
+                            </div>
+                            <div>
+                                <label style="font-size: 11px;">⬇️ Bas (px)</label>
+                                <input type="number" id="marginBottom" value="${parseInt(getActualStyle(element, 'marginBottom')) || 0}">
+                            </div>
+                            <div>
+                                <label style="font-size: 11px;">⬅️ Gauche (px)</label>
+                                <input type="number" id="marginLeft" value="${parseInt(getActualStyle(element, 'marginLeft')) || 0}">
+                            </div>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyMargin" ${getActualStyle(element, 'margin') ? 'checked' : ''}>
+                            <label for="applyMargin">Modifier le margin</label>
+                        </div>
+                    </div>
+                `;
+
+                // BORDER
+                const borderWidth = parseInt(getActualStyle(element, 'borderWidth')) || 1;
+                const borderColor = rgbToHex(getActualStyle(element, 'borderColor')) || '#000000';
+                const borderRadius = parseInt(getActualStyle(element, 'borderRadius')) || 0;
+                editFields.innerHTML += `
+                    <div class="edit-field">
+                        <label>🔲 Bordure</label>
+                        <div class="spacing-grid">
+                            <div>
+                                <label style="font-size: 11px;">Épaisseur (px)</label>
+                                <input type="number" id="borderWidth" value="${borderWidth}" min="0" max="20">
+                            </div>
+                            <div>
+                                <label style="font-size: 11px;">Couleur</label>
+                                <input type="color" id="borderColor" value="${borderColor}">
+                            </div>
+                        </div>
+                        <label style="font-size: 11px; margin-top: 10px;">Arrondi (px)</label>
+                        <input type="number" id="borderRadius" value="${borderRadius}" min="0" max="50">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyBorder" ${getActualStyle(element, 'border') ? 'checked' : ''}>
+                            <label for="applyBorder">Appliquer la bordure</label>
+                        </div>
+                    </div>
+                `;
+
             } else if (type === 'image') {
                 editFields.innerHTML += `
                     <div class="edit-field">
-                        <label>URL de l'image</label>
+                        <label>🖼️ URL de l'image</label>
                         <input type="text" id="editImageSrc" value="${element.src}">
+                        <div class="help-text">URL complète de l'image</div>
                     </div>
                     <div class="edit-field">
-                        <label>Texte alternatif</label>
+                        <label>📝 Texte alternatif</label>
                         <input type="text" id="editImageAlt" value="${element.alt || ''}">
+                        <div class="help-text">Description pour l'accessibilité</div>
                     </div>
                     <div class="edit-field">
-                        <label>Largeur (px ou %)</label>
-                        <input type="text" id="editImageWidth" value="${element.style.width || '100%'}">
+                        <label>📏 Largeur</label>
+                        <input type="text" id="editImageWidth" value="${element.style.width || ''}">
+                        <div class="help-text">Ex: 100%, 500px, auto</div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyImageWidth" ${element.style.width ? 'checked' : ''}>
+                            <label for="applyImageWidth">Modifier la largeur</label>
+                        </div>
+                    </div>
+                    <div class="edit-field">
+                        <label>📐 Hauteur</label>
+                        <input type="text" id="editImageHeight" value="${element.style.height || ''}">
+                        <div class="help-text">Ex: 300px, auto</div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyImageHeight" ${element.style.height ? 'checked' : ''}>
+                            <label for="applyImageHeight">Modifier la hauteur</label>
+                        </div>
                     </div>
                 `;
             }
 
+            // SAVE AND CANCEL BUTTONS
+            editFields.innerHTML += `
+                <div class="panel-actions">
+                    <button class="btn btn-success" onclick="saveEdit()">✅ Appliquer</button>
+                    <button class="btn btn-secondary" onclick="closeEditPanel()">❌ Annuler</button>
+                </div>
+            `;
+
             document.getElementById('overlay').classList.add('active');
             document.getElementById('editPanel').classList.add('active');
+        }
+
+        // DELETE ELEMENT
+        function deleteElement() {
+            if (currentElement && confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')) {
+                saveToHistory();
+                currentElement.remove();
+                closeEditPanel();
+                showToast('🗑️ Élément supprimé');
+                updateStats();
+            }
         }
 
         // SAVE EDIT
         function saveEdit() {
             if (!currentElement) return;
 
+            saveToHistory();
             const type = currentElement.getAttribute('data-type');
 
-            if (type === 'text' || type === 'link') {
-                const newText = document.getElementById('editText').value;
-                currentElement.textContent = newText;
+            try {
+                if (type === 'text' || type === 'link') {
+                    const newText = document.getElementById('editText').value;
+                    if (newText !== currentElement.textContent) {
+                        currentElement.textContent = newText;
+                    }
 
-                if (type === 'link') {
-                    const newHref = document.getElementById('editHref').value;
-                    currentElement.href = newHref;
+                    if (type === 'link') {
+                        const newHref = document.getElementById('editHref').value;
+                        if (newHref) currentElement.href = newHref;
+                    }
+
+                    // Font family
+                    if (document.getElementById('applyFont').checked) {
+                        currentElement.style.fontFamily = document.getElementById('editFontFamily').value;
+                    } else {
+                        currentElement.style.fontFamily = '';
+                    }
+
+                    // Font size
+                    if (document.getElementById('applyFontSize').checked) {
+                        currentElement.style.fontSize = document.getElementById('editFontSize').value + 'px';
+                    } else {
+                        currentElement.style.fontSize = '';
+                    }
+
+                    // Font weight
+                    if (document.getElementById('applyFontWeight').checked) {
+                        currentElement.style.fontWeight = document.getElementById('editFontWeight').value;
+                    } else {
+                        currentElement.style.fontWeight = '';
+                    }
+
+                    // Text align
+                    if (document.getElementById('applyTextAlign').checked) {
+                        currentElement.style.textAlign = document.getElementById('editTextAlign').value;
+                    } else {
+                        currentElement.style.textAlign = '';
+                    }
+
+                    // Color
+                    if (document.getElementById('applyColor').checked) {
+                        currentElement.style.color = document.getElementById('editColor').value;
+                    } else {
+                        currentElement.style.color = '';
+                    }
+
+                    // Background color
+                    if (document.getElementById('applyBgColor').checked) {
+                        currentElement.style.backgroundColor = document.getElementById('editBgColor').value;
+                    } else {
+                        currentElement.style.backgroundColor = '';
+                    }
+
+                    // Padding
+                    if (document.getElementById('applyPadding').checked) {
+                        currentElement.style.paddingTop = document.getElementById('paddingTop').value + 'px';
+                        currentElement.style.paddingRight = document.getElementById('paddingRight').value + 'px';
+                        currentElement.style.paddingBottom = document.getElementById('paddingBottom').value + 'px';
+                        currentElement.style.paddingLeft = document.getElementById('paddingLeft').value + 'px';
+                    } else {
+                        currentElement.style.padding = '';
+                    }
+
+                    // Margin
+                    if (document.getElementById('applyMargin').checked) {
+                        currentElement.style.marginTop = document.getElementById('marginTop').value + 'px';
+                        currentElement.style.marginRight = document.getElementById('marginRight').value + 'px';
+                        currentElement.style.marginBottom = document.getElementById('marginBottom').value + 'px';
+                        currentElement.style.marginLeft = document.getElementById('marginLeft').value + 'px';
+                    } else {
+                        currentElement.style.margin = '';
+                    }
+
+                    // Border
+                    if (document.getElementById('applyBorder').checked) {
+                        currentElement.style.borderWidth = document.getElementById('borderWidth').value + 'px';
+                        currentElement.style.borderColor = document.getElementById('borderColor').value;
+                        currentElement.style.borderStyle = 'solid';
+                        currentElement.style.borderRadius = document.getElementById('borderRadius').value + 'px';
+                    } else {
+                        currentElement.style.border = '';
+                        currentElement.style.borderRadius = '';
+                    }
+
+                } else if (type === 'image') {
+                    const newSrc = document.getElementById('editImageSrc').value;
+                    if (newSrc) currentElement.src = newSrc;
+
+                    const newAlt = document.getElementById('editImageAlt').value;
+                    currentElement.alt = newAlt;
+
+                    if (document.getElementById('applyImageWidth').checked) {
+                        currentElement.style.width = document.getElementById('editImageWidth').value;
+                    } else {
+                        currentElement.style.width = '';
+                    }
+
+                    if (document.getElementById('applyImageHeight').checked) {
+                        currentElement.style.height = document.getElementById('editImageHeight').value;
+                    } else {
+                        currentElement.style.height = '';
+                    }
                 }
 
-                const newColor = document.getElementById('editColor').value;
-                currentElement.style.color = newColor;
-
-                const newBgColor = document.getElementById('editBgColor').value;
-                currentElement.style.backgroundColor = newBgColor;
-
-                const newFontSize = document.getElementById('editFontSize').value;
-                currentElement.style.fontSize = newFontSize + 'px';
-
-                const newPadding = document.getElementById('editPadding').value;
-                currentElement.style.padding = newPadding + 'px';
-
-            } else if (type === 'image') {
-                const newSrc = document.getElementById('editImageSrc').value;
-                currentElement.src = newSrc;
-
-                const newAlt = document.getElementById('editImageAlt').value;
-                currentElement.alt = newAlt;
-
-                const newWidth = document.getElementById('editImageWidth').value;
-                currentElement.style.width = newWidth;
+                closeEditPanel();
+                updateStats();
+                showToast('✅ Modifications appliquées !');
+            } catch (error) {
+                showToast('❌ Erreur: ' + error.message, 'error');
+                console.error(error);
             }
-
-            closeEditPanel();
-            showToast('✅ Modifications enregistrées !');
         }
 
         // CLOSE EDIT PANEL
@@ -637,34 +1090,19 @@
             currentElement = null;
         }
 
-        // CHANGE PRIMARY COLOR
-        function changePrimaryColor(color) {
-            const preview = document.getElementById('preview');
-            const elements = preview.querySelectorAll('[style*="color"], [style*="background"]');
+        // RGB TO HEX
+        function rgbToHex(rgb) {
+            if (!rgb || rgb === '') return '';
+            if (rgb.startsWith('#')) return rgb;
 
-            elements.forEach(el => {
-                const style = el.style.cssText;
-                if (style.includes('#0D4AFF') || style.includes('rgb(13, 74, 255)')) {
-                    el.style.cssText = style.replace(/#0D4AFF/gi, color).replace(/rgb\(13,\s*74,\s*255\)/gi, color);
-                }
-            });
+            const match = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+            if (!match) return '';
 
-            showToast('🎨 Couleur primaire changée !');
-        }
+            const r = parseInt(match[1]);
+            const g = parseInt(match[2]);
+            const b = parseInt(match[3]);
 
-        // CHANGE SECONDARY COLOR
-        function changeSecondaryColor(color) {
-            const preview = document.getElementById('preview');
-            const elements = preview.querySelectorAll('[style*="background"]');
-
-            elements.forEach(el => {
-                const bgColor = window.getComputedStyle(el).backgroundColor;
-                if (bgColor === 'rgb(255, 255, 255)' || bgColor === 'rgba(255, 255, 255, 1)') {
-                    el.style.backgroundColor = color;
-                }
-            });
-
-            showToast('🎨 Couleur secondaire changée !');
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
         }
 
         // FIND AND REPLACE
@@ -677,6 +1115,7 @@
                 return;
             }
 
+            saveToHistory();
             const preview = document.getElementById('preview');
             let count = 0;
 
@@ -687,13 +1126,86 @@
                         node.textContent = newText;
                         count++;
                     }
-                } else {
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    if (node.href && node.href.includes(search)) {
+                        node.href = node.href.replace(new RegExp(search, 'gi'), replace);
+                        count++;
+                    }
+                    if (node.src && node.src.includes(search)) {
+                        node.src = node.src.replace(new RegExp(search, 'gi'), replace);
+                        count++;
+                    }
                     node.childNodes.forEach(replaceInNode);
                 }
             }
 
             replaceInNode(preview);
             showToast(`✅ ${count} remplacement(s) effectué(s) !`);
+        }
+
+        // HISTORY MANAGEMENT
+        function saveToHistory() {
+            const html = document.getElementById('preview').innerHTML;
+
+            // Remove future history if we're not at the end
+            if (historyIndex < history.length - 1) {
+                history = history.slice(0, historyIndex + 1);
+            }
+
+            history.push(html);
+            if (history.length > 50) {
+                history.shift();
+            } else {
+                historyIndex++;
+            }
+
+            updateHistoryButtons();
+        }
+
+        function undoAction() {
+            if (historyIndex > 0) {
+                historyIndex--;
+                document.getElementById('preview').innerHTML = history[historyIndex];
+                makeElementsEditable();
+                updateHistoryButtons();
+                showToast('↶ Annulé');
+            }
+        }
+
+        function redoAction() {
+            if (historyIndex < history.length - 1) {
+                historyIndex++;
+                document.getElementById('preview').innerHTML = history[historyIndex];
+                makeElementsEditable();
+                updateHistoryButtons();
+                showToast('↷ Refait');
+            }
+        }
+
+        function updateHistoryButtons() {
+            document.getElementById('undoBtn').disabled = historyIndex <= 0;
+            document.getElementById('redoBtn').disabled = historyIndex >= history.length - 1;
+        }
+
+        // ZOOM
+        function zoomIn() {
+            if (zoomLevel < 200) {
+                zoomLevel += 10;
+                updateZoom();
+            }
+        }
+
+        function zoomOut() {
+            if (zoomLevel > 50) {
+                zoomLevel -= 10;
+                updateZoom();
+            }
+        }
+
+        function updateZoom() {
+            const preview = document.getElementById('preview');
+            preview.style.transform = `scale(${zoomLevel / 100})`;
+            document.getElementById('zoomLevel').textContent = zoomLevel + '%';
         }
 
         // SAVE NEWSLETTER
@@ -725,7 +1237,14 @@
             const list = document.getElementById('newslettersList');
             list.innerHTML = '';
 
-            Object.values(newsletters).sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(newsletter => {
+            const sorted = Object.values(newsletters).sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (sorted.length === 0) {
+                list.innerHTML = '<div style="text-align: center; padding: 20px; color: #7f8c8d; font-size: 12px;">Aucune newsletter sauvegardée</div>';
+                return;
+            }
+
+            sorted.forEach(newsletter => {
                 const item = document.createElement('div');
                 item.className = 'newsletter-item';
                 if (currentNewsletterId === newsletter.id) {
@@ -746,10 +1265,12 @@
         function loadNewsletterById(id) {
             const newsletter = newsletters[id];
             if (newsletter) {
+                saveToHistory();
                 document.getElementById('preview').innerHTML = newsletter.html;
                 makeElementsEditable();
                 currentNewsletterId = id;
                 loadNewslettersList();
+                updateStats();
                 showToast(`📧 ${newsletter.name} chargée !`);
             }
         }
@@ -762,7 +1283,6 @@
                 localStorage.setItem('newsletters', JSON.stringify(newsletters));
                 if (currentNewsletterId === id) {
                     currentNewsletterId = null;
-                    document.getElementById('preview').innerHTML = '<div style="padding: 40px; text-align: center; color: #95a5a6;"><h2>Newsletter supprimée</h2></div>';
                 }
                 loadNewslettersList();
                 showToast('🗑️ Newsletter supprimée');
@@ -780,7 +1300,18 @@
         // DOWNLOAD HTML
         function downloadHTML() {
             const html = document.getElementById('preview').innerHTML;
-            const blob = new Blob([html], { type: 'text/html' });
+            const fullHTML = `<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter</title>
+</head>
+<body>
+${html}
+</body>
+</html>`;
+            const blob = new Blob([fullHTML], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -789,46 +1320,56 @@
             showToast('⬇️ HTML téléchargé !');
         }
 
+        // UPDATE STATS
+        function updateStats() {
+            const html = document.getElementById('preview').innerHTML;
+            const size = (new Blob([html]).size / 1024).toFixed(2);
+            const elements = document.getElementById('preview').querySelectorAll('[data-editable="true"]').length;
+            document.getElementById('stats').textContent = `Taille: ${size} KB | Éléments éditables: ${elements}`;
+        }
+
         // RESET VIEW
         function resetView() {
             if (confirm('Réinitialiser la vue ? (Les modifications non sauvegardées seront perdues)')) {
-                document.getElementById('preview').innerHTML = '<div style="padding: 40px; text-align: center; color: #95a5a6;"><h2>👆 Collez votre HTML dans la barre latérale</h2></div>';
+                document.getElementById('preview').innerHTML = `
+                    <div style="padding: 60px 40px; text-align: center; color: #95a5a6;">
+                        <h2 style="font-size: 32px; margin-bottom: 20px;">👋 Bienvenue</h2>
+                        <p style="margin-top: 10px; font-size: 16px;">Collez votre HTML dans la barre latérale</p>
+                    </div>
+                `;
                 document.getElementById('htmlInput').value = '';
                 currentNewsletterId = null;
+                history = [];
+                historyIndex = -1;
+                updateHistoryButtons();
                 loadNewslettersList();
+                updateStats();
             }
         }
 
         // ENABLE EDIT MODE
         function enableEditMode() {
-            showToast('✏️ Mode édition activé - Cliquez sur un élément');
+            showToast('✏️ Mode édition - Cliquez sur n\'importe quel élément');
         }
 
         // SHOW TOAST
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             toast.textContent = message;
-            toast.style.background = type === 'warning' ? '#f39c12' : '#27ae60';
-            toast.classList.add('active');
+            toast.className = 'toast active';
+            if (type) {
+                toast.classList.add(type);
+            }
 
             setTimeout(() => {
                 toast.classList.remove('active');
             }, 3000);
         }
 
-        // RGB TO HEX
-        function rgbToHex(rgb) {
-            if (!rgb || rgb === 'rgba(0, 0, 0, 0)') return '#ffffff';
-            const matches = rgb.match(/\d+/g);
-            if (!matches) return '#000000';
-            return '#' + matches.slice(0, 3).map(x => {
-                const hex = parseInt(x).toString(16);
-                return hex.length === 1 ? '0' + hex : hex;
-            }).join('');
-        }
-
         // INIT
         loadNewslettersList();
+        updateStats();
+        updateHistoryButtons();
     </script>
 </body>
 </html>
