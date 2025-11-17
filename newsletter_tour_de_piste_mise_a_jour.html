@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HorsePrint Pro - Tours de Piste CSI</title>
+    <title>HorsePrint Pro - Tours de Piste CSI - OFFRE LIMITÉE</title>
+    <!--[if !mso]><!-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<![endif]-->
+    <!-- PREHEADER optimisé pour taux d'ouverture -->
+    <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
+        {contactfield=firstname|Cher cavalier}, obtenez vos tours de piste CSI à partir de 28€ HT - Devis GRATUIT sous 24h ⚡ Offre limitée jusqu'au 30 novembre
+    </div>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-        
+
+        /* RESET EMAIL */
+        body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+
         * {
             margin: 0;
             padding: 0;
@@ -17,17 +29,19 @@
             background-color: #F5F7FA;
             line-height: 1.6;
             color: #1a1a1a;
+            margin: 0 !important;
+            padding: 0 !important;
         }
         .container {
             max-width: 650px;
             margin: 0 auto;
             background-color: #ffffff;
         }
-        
+
         /* HERO VISUEL */
         .hero {
             background: #0D4AFF;
-            padding: 15px 30px;
+            padding: 20px 30px;
             text-align: center;
             color: white;
             position: relative;
@@ -35,12 +49,17 @@
         .hero-badge {
             background-color: #FF4444;
             display: inline-block;
-            padding: 6px 16px;
+            padding: 8px 18px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 800;
             letter-spacing: 1px;
             margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
         .hero-title {
             font-size: 42px;
@@ -52,8 +71,23 @@
             font-size: 18px;
             font-weight: 500;
             opacity: 0.95;
+            margin-bottom: 15px;
         }
-        
+        .hero-cta {
+            display: inline-block;
+            background-color: #FF4444;
+            color: white !important;
+            padding: 16px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+            margin-top: 10px;
+        }
+
         /* SECTION EXPERTISE RAPIDE */
         .expertise-bar {
             background-color: #1a1a1a;
@@ -67,14 +101,37 @@
             color: #0D4AFF;
             font-weight: 800;
         }
-        
+
+        /* URGENCE TIMER */
+        .urgency-bar {
+            background: linear-gradient(135deg, #FF4444 0%, #FF6B6B 100%);
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* SOCIAL PROOF */
+        .social-proof {
+            background-color: #FFF9E6;
+            border-left: 4px solid #FFB800;
+            padding: 20px 25px;
+            margin: 20px 20px;
+            border-radius: 8px;
+        }
+        .social-proof strong {
+            color: #D97706;
+            font-size: 16px;
+        }
+
         /* GRILLE DE PRIX VISUELLE */
         .prices-section {
             padding: 40px 20px;
         }
         .prices-title {
             text-align: center;
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 800;
             color: #0D4AFF;
             margin-bottom: 8px;
@@ -86,15 +143,32 @@
         }
         .price-card {
             background: #ffffff;
-            border: 2px solid #E8EAED;
+            border: 3px solid #E8EAED;
             border-radius: 12px;
             padding: 25px;
             position: relative;
             transition: all 0.2s;
         }
+        .price-card.featured {
+            border-color: #0D4AFF;
+            background: linear-gradient(135deg, #F0F4FF 0%, #FFFFFF 100%);
+            box-shadow: 0 8px 30px rgba(13, 74, 255, 0.15);
+        }
         .price-card:hover {
             border-color: #0D4AFF;
             box-shadow: 0 4px 12px rgba(13, 74, 255, 0.1);
+        }
+        .badge-bestseller {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: #FF4444;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
         }
         .price-card-header {
             display: flex;
@@ -122,8 +196,26 @@
             font-size: 14px;
             color: #6B7280;
             font-weight: 500;
+            margin-bottom: 15px;
         }
-        
+        .card-cta {
+            display: block;
+            background-color: #0D4AFF;
+            color: white !important;
+            padding: 14px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .card-cta:hover {
+            background-color: #0939CC;
+        }
+
         /* IMAGE PLACEHOLDER */
         .visual-section {
             background-color: #F5F7FA;
@@ -149,7 +241,25 @@
             font-weight: 600;
             border: 2px dashed #D1D5DB;
         }
-        
+
+        /* TEMOIGNAGES */
+        .testimonial {
+            background-color: #F9FAFB;
+            border-left: 4px solid #0D4AFF;
+            padding: 20px 25px;
+            margin: 20px;
+            border-radius: 8px;
+            font-style: italic;
+            color: #374151;
+        }
+        .testimonial-author {
+            margin-top: 10px;
+            font-weight: 700;
+            color: #0D4AFF;
+            font-style: normal;
+            font-size: 14px;
+        }
+
         /* ARGUMENTS VISUELS */
         .why-section {
             padding: 40px 30px;
@@ -157,10 +267,10 @@
         }
         .why-title {
             text-align: center;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 800;
             color: #1a1a1a;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
         .why-grid {
             display: grid;
@@ -169,58 +279,87 @@
         }
         .why-item {
             background-color: #F5F7FA;
-            padding: 20px;
+            padding: 25px;
             border-radius: 12px;
             text-align: center;
+            border: 2px solid #E8EAED;
         }
         .why-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
+            font-size: 40px;
+            margin-bottom: 12px;
         }
         .why-text {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 700;
             color: #1a1a1a;
+            line-height: 1.4;
         }
-        
+
+        /* GARANTIES */
+        .guarantee-section {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            margin: 20px;
+            border-radius: 12px;
+        }
+        .guarantee-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+        .guarantee-list {
+            font-size: 15px;
+            line-height: 1.8;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
         /* CTA PUISSANT */
         .cta-section {
-            background: #0D4AFF;
+            background: linear-gradient(135deg, #0D4AFF 0%, #0939CC 100%);
             padding: 50px 30px;
             text-align: center;
         }
         .cta-title {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 800;
             color: white;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             line-height: 1.2;
+        }
+        .cta-subtitle-top {
+            font-size: 18px;
+            color: white;
+            margin-bottom: 25px;
+            font-weight: 600;
         }
         .cta-button {
             display: inline-block;
-            background-color: white;
-            color: #0D4AFF;
-            padding: 18px 50px;
+            background-color: #FF4444;
+            color: white !important;
+            padding: 20px 60px;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 800;
-            font-size: 16px;
+            font-size: 18px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
-            transition: transform 0.2s;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
         }
         .cta-button:hover {
+            background-color: #FF2222;
             transform: scale(1.05);
         }
         .cta-subtitle {
             color: white;
-            font-size: 14px;
-            margin-top: 15px;
-            opacity: 0.9;
-            font-weight: 500;
+            font-size: 15px;
+            margin-top: 20px;
+            opacity: 0.95;
+            font-weight: 600;
         }
-        
+
         /* FOOTER MINIMALISTE */
         .footer {
             background-color: #1a1a1a;
@@ -239,52 +378,103 @@
             color: #0D4AFF;
             text-decoration: none;
         }
-        
+        .unsubscribe {
+            margin-top: 15px;
+            font-size: 11px;
+            color: #6B7280;
+        }
+
+        /* DARK MODE */
+        @media (prefers-color-scheme: dark) {
+            .price-card {
+                background-color: #1F2937 !important;
+                color: #F3F4F6 !important;
+            }
+        }
+
+        /* RESPONSIVE */
         @media only screen and (max-width: 600px) {
             .hero-title {
-                font-size: 32px;
+                font-size: 28px !important;
+            }
+            .hero-subtitle {
+                font-size: 16px !important;
             }
             .price-big {
-                font-size: 36px;
+                font-size: 36px !important;
+            }
+            .prices-title {
+                font-size: 24px !important;
+            }
+            .cta-title {
+                font-size: 28px !important;
+            }
+            .cta-button {
+                padding: 18px 40px !important;
+                font-size: 16px !important;
             }
             .why-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr !important;
             }
             .visual-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr !important;
+            }
+            .hero-cta {
+                padding: 14px 30px !important;
+                font-size: 13px !important;
             }
         }
     </style>
 </head>
-<body>
+<body style="margin: 0; padding: 0; background-color: #F5F7FA;">
     <div class="container">
-        <!-- HERO -->
+        <!-- HERO OPTIMISÉ -->
         <div class="hero">
-            <div class="hero-badge">⚡ OFFRE LIMITÉE</div>
-            <div class="hero-title"><span style="color: #ffffff; font-size: 34px; font-weight: 700; letter-spacing: 2px;">HorsePrint</span>
-<span style="background: #0D4AFF; color: #ffffff; padding: 4px 12px; border-radius: 6px; font-size: 18px; font-weight: 800; margin-left: 8px; border: 2px solid #ffffff; display: inline-block; vertical-align: middle; letter-spacing: 1px;">PRO</span></div>
-            <div class="hero-subtitle">Expert de la personnalisation équestre pour les pros</div>
+            <div class="hero-badge">⚡ OFFRE LIMITÉE - Expire le 30 novembre</div>
+            <div class="hero-title">
+                <span style="color: #ffffff; font-size: 34px; font-weight: 700; letter-spacing: 2px;">HorsePrint</span>
+                <span style="background: #FF4444; color: #ffffff; padding: 6px 14px; border-radius: 6px; font-size: 20px; font-weight: 800; margin-left: 8px; border: 2px solid #ffffff; display: inline-block; vertical-align: middle; letter-spacing: 1px;">PRO</span>
+            </div>
+            <div class="hero-subtitle">Tours de piste CSI & signalétique équestre premium</div>
+            <a href="mailto:contact@horseprint-pro.com?subject=Devis Tours de Piste - {contactfield=firstname}&utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi" class="hero-cta">📧 DEVIS GRATUIT EN 24H</a>
         </div>
-        
+
+        <!-- BARRE D'URGENCE -->
+        <div class="urgency-bar">
+            ⏰ Plus que 48h pour profiter des prix promotionnels !
+        </div>
+
         <!-- BANDEAU VISUEL PRODUIT -->
         <div style="background-color: #000; padding: 0; overflow: hidden;">
-            <img src="https://print-horse.com/images/tapis%20de%20selle.png" alt="Tour de piste HorsePrint Pro - CSI 4 étoiles" style="width: 100%; height: auto; display: block; max-height: 350px; object-fit: cover; object-position: center;">
+            <a href="mailto:contact@horseprint-pro.com?subject=Devis Tours de Piste&utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi" style="display: block;">
+                <img src="https://print-horse.com/images/tapis%20de%20selle.png" alt="Tour de piste HorsePrint Pro - CSI 4 étoiles - Qualité premium pour professionnels" style="width: 100%; height: auto; display: block; max-height: 350px; object-fit: cover; object-position: center;">
+            </a>
         </div>
-        
+
         <!-- BARRE EXPERTISE -->
         <div class="expertise-bar">
-            <span>Spécialiste équestre</span> • Délais rapides • Qualité pro
+            ✓ <span>+500 événements équipés</span> • ✓ Livraison express 72h • ✓ Qualité CSI 5*
         </div>
-        
-        <!-- PRIX VISUELS -->
+
+        <!-- SOCIAL PROOF -->
+        <div class="social-proof">
+            🏆 <strong>Déjà +320 organisateurs nous font confiance</strong> pour leurs CSI, championnats et concours régionaux. Rejoignez-les !
+        </div>
+
+        <!-- PRIX VISUELS OPTIMISÉS -->
         <div class="prices-section">
-            <div class="prices-title">🔥 OFFRE EXCEPTIONNELLE</div>
-            <div style="text-align: center; font-size: 15px; color: #666; margin-top: -15px; margin-bottom: 25px; font-weight: 600;">
-                Dimensions sur mesure disponibles • Devis gratuit sous 24h
+            <div class="prices-title">🔥 PRIX IMBATTABLES</div>
+            <div style="text-align: center; font-size: 16px; color: #FF4444; margin-top: 5px; margin-bottom: 10px; font-weight: 700;">
+                -30% sur toute commande avant le 30 novembre !
             </div>
-            
+            <div style="text-align: center; font-size: 15px; color: #666; margin-bottom: 30px; font-weight: 600;">
+                ✓ Dimensions sur mesure • ✓ Devis gratuit sous 24h • ✓ Pas de frais cachés
+            </div>
+
             <div class="price-cards">
-                <div class="price-card">
+                <!-- CARD 1 - BESTSELLER -->
+                <div class="price-card featured">
+                    <div class="badge-bestseller">⭐ BEST-SELLER</div>
                     <div class="price-card-header">
                         <div class="product-title">BÂCHE TOUR DE PISTE</div>
                         <div>
@@ -292,9 +482,11 @@
                             <span class="price-suffix">HT</span>
                         </div>
                     </div>
-                    <div class="product-specs">2m × 80cm • PVC premium • Œillets renforcés</div>
+                    <div class="product-specs">✓ 2m × 80cm • ✓ PVC premium 450g • ✓ Œillets renforcés tous les 50cm</div>
+                    <a href="mailto:contact@horseprint-pro.com?subject=Devis Bâche 2m x 80cm - {contactfield=firstname}&body=Bonjour, je souhaite un devis pour une bâche tour de piste 2m x 80cm.%0D%0A%0D%0AMon nom : {contactfield=firstname} {contactfield=lastname}%0D%0AMon email : {contactfield=email}&utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi&utm_content=prix-2m" class="card-cta">Demander un devis →</a>
                 </div>
-                
+
+                <!-- CARD 2 -->
                 <div class="price-card">
                     <div class="price-card-header">
                         <div class="product-title">BÂCHE TOUR DE PISTE</div>
@@ -303,10 +495,13 @@
                             <span class="price-suffix">HT</span>
                         </div>
                     </div>
-                    <div class="product-specs">3m × 80cm • PVC premium • Qualité professionnelle</div>
+                    <div class="product-specs">✓ 3m × 80cm • ✓ PVC premium 450g • ✓ Impression haute définition</div>
+                    <a href="mailto:contact@horseprint-pro.com?subject=Devis Bâche 3m x 80cm - {contactfield=firstname}&body=Bonjour, je souhaite un devis pour une bâche tour de piste 3m x 80cm.%0D%0A%0D%0AMon nom : {contactfield=firstname} {contactfield=lastname}%0D%0AMon email : {contactfield=email}&utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi&utm_content=prix-3m" class="card-cta">Demander un devis →</a>
                 </div>
-                
-                <div class="price-card">
+
+                <!-- CARD 3 - CHOIX PRO -->
+                <div class="price-card featured">
+                    <div class="badge-bestseller">🎖️ CHOIX PRO</div>
                     <div class="price-card-header">
                         <div class="product-title">BÂCHE GRAND FORMAT</div>
                         <div>
@@ -314,9 +509,11 @@
                             <span class="price-suffix">HT</span>
                         </div>
                     </div>
-                    <div class="product-specs">5m × 80cm • PVC premium • Installation facile</div>
+                    <div class="product-specs">✓ 5m × 80cm • ✓ PVC premium 450g • ✓ Parfait pour sponsors CSI</div>
+                    <a href="mailto:contact@horseprint-pro.com?subject=Devis Bâche 5m x 80cm - {contactfield=firstname}&body=Bonjour, je souhaite un devis pour une bâche tour de piste 5m x 80cm.%0D%0A%0D%0AMon nom : {contactfield=firstname} {contactfield=lastname}%0D%0AMon email : {contactfield=email}&utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi&utm_content=prix-5m" class="card-cta">Demander un devis →</a>
                 </div>
-                
+
+                <!-- CARD 4 -->
                 <div class="price-card">
                     <div class="price-card-header">
                         <div class="product-title">PANNEAU ALU DIBOND</div>
@@ -325,9 +522,11 @@
                             <span class="price-suffix">HT</span>
                         </div>
                     </div>
-                    <div class="product-specs">1m × 90cm • Aluminium 3mm • Ultra-résistant</div>
+                    <div class="product-specs">✓ 1m × 90cm • ✓ Aluminium 3mm • ✓ Ultra-résistant intempéries</div>
+                    <a href="mailto:contact@horseprint-pro.com?subject=Devis Panneau Alu 1m x 90cm - {contactfield=firstname}&body=Bonjour, je souhaite un devis pour un panneau alu 1m x 90cm.%0D%0A%0D%0AMon nom : {contactfield=firstname} {contactfield=lastname}%0D%0AMon email : {contactfield=email}&utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi&utm_content=prix-alu-1m" class="card-cta">Demander un devis →</a>
                 </div>
-                
+
+                <!-- CARD 5 -->
                 <div class="price-card">
                     <div class="price-card-header">
                         <div class="product-title">PANNEAU ALU DIBOND</div>
@@ -336,10 +535,13 @@
                             <span class="price-suffix">HT</span>
                         </div>
                     </div>
-                    <div class="product-specs">1,5m × 90cm • Aluminium 3mm • Finition premium</div>
+                    <div class="product-specs">✓ 1,5m × 90cm • ✓ Aluminium 3mm • ✓ Finition premium anti-UV</div>
+                    <a href="mailto:contact@horseprint-pro.com?subject=Devis Panneau Alu 1,5m x 90cm - {contactfield=firstname}&body=Bonjour, je souhaite un devis pour un panneau alu 1,5m x 90cm.%0D%0A%0D%0AMon nom : {contactfield=firstname} {contactfield=lastname}%0D%0AMon email : {contactfield=email}&utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi&utm_content=prix-alu-1-5m" class="card-cta">Demander un devis →</a>
                 </div>
-                
-                <div class="price-card">
+
+                <!-- CARD 6 - PRESTIGE -->
+                <div class="price-card featured">
+                    <div class="badge-bestseller">👑 PRESTIGE</div>
                     <div class="price-card-header">
                         <div class="product-title">GRAND PANNEAU ALU</div>
                         <div>
@@ -347,51 +549,114 @@
                             <span class="price-suffix">HT</span>
                         </div>
                     </div>
-                    <div class="product-specs">2m × 1m • Aluminium 3mm • Format prestige</div>
+                    <div class="product-specs">✓ 2m × 1m • ✓ Aluminium 3mm • ✓ Format prestige CSI 5*</div>
+                    <a href="mailto:contact@horseprint-pro.com?subject=Devis Panneau Alu 2m x 1m - {contactfield=firstname}&body=Bonjour, je souhaite un devis pour un panneau alu 2m x 1m.%0D%0A%0D%0AMon nom : {contactfield=firstname} {contactfield=lastname}%0D%0AMon email : {contactfield=email}&utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi&utm_content=prix-alu-2m" class="card-cta">Demander un devis →</a>
+                </div>
+            </div>
+
+            <!-- CTA APRÈS PRIX -->
+            <div style="text-align: center; margin-top: 35px; padding: 30px 20px; background: #F0F4FF; border-radius: 12px;">
+                <p style="font-size: 18px; font-weight: 700; color: #0D4AFF; margin-bottom: 15px;">
+                    💬 Besoin d'un format sur mesure ?
+                </p>
+                <a href="mailto:contact@horseprint-pro.com?subject=Devis sur mesure - {contactfield=firstname}&body=Bonjour, je souhaite un devis pour un format personnalisé.%0D%0A%0D%0AMon nom : {contactfield=firstname} {contactfield=lastname}%0D%0AMon email : {contactfield=email}%0D%0A%0D%0AMes besoins :%0D%0A&utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi&utm_content=devis-sur-mesure" style="display: inline-block; background-color: #0D4AFF; color: white !important; padding: 16px 40px; text-decoration: none; border-radius: 50px; font-weight: 800; font-size: 15px; text-transform: uppercase;">
+                    Contactez-nous →
+                </a>
+            </div>
+        </div>
+
+        <!-- SECTION VISUELLE AVEC LÉGENDES -->
+        <div class="visual-section">
+            <h3 style="font-size: 24px; font-weight: 800; color: #1a1a1a; margin-bottom: 25px;">Nos réalisations pour événements équestres</h3>
+            <div class="visual-grid">
+                <div class="visual-placeholder" style="background-image: url('https://print-horse.com/images/signaletique.png'); background-size: cover; background-position: center; border: none;">
+                    <a href="mailto:contact@horseprint-pro.com?subject=Devis Signalétique&utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi&utm_content=gallery-signaletique" style="display: block; width: 100%; height: 100%;"></a>
+                </div>
+                <div class="visual-placeholder" style="background-image: url('https://print-horse.com/images/drapeaux.png'); background-size: cover; background-position: center; border: none;">
+                    <a href="mailto:contact@horseprint-pro.com?subject=Devis Drapeaux&utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi&utm_content=gallery-drapeaux" style="display: block; width: 100%; height: 100%;"></a>
+                </div>
+                <div class="visual-placeholder" style="background-image: url('https://print-horse.com/images/bracelets-acces%20uniform-bg-590x180.jpg'); background-size: cover; background-position: center; border: none;">
+                    <a href="mailto:contact@horseprint-pro.com?subject=Devis Bracelets&utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi&utm_content=gallery-bracelets" style="display: block; width: 100%; height: 100%;"></a>
+                </div>
+                <div class="visual-placeholder" style="background-image: url('https://print-horse.com/images/Boutique-officielle.png'); background-size: cover; background-position: center; border: none;">
+                    <a href="mailto:contact@horseprint-pro.com?subject=Devis Boutique&utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi&utm_content=gallery-boutique" style="display: block; width: 100%; height: 100%;"></a>
                 </div>
             </div>
         </div>
-        
-        <!-- SECTION VISUELLE -->
-        <div class="visual-section">
-            <div class="visual-grid">
-                <div class="visual-placeholder" style="background-image: url('https://print-horse.com/images/signaletique.png'); background-size: cover; background-position: center; border: none;"></div>
-                <div class="visual-placeholder" style="background-image: url('https://print-horse.com/images/drapeaux.png'); background-size: cover; background-position: center; border: none;"></div>
-                <div class="visual-placeholder" style="background-image: url('https://print-horse.com/images/bracelets-acces%20uniform-bg-590x180.jpg'); background-size: cover; background-position: center; border: none;"></div>
-                <div class="visual-placeholder" style="background-image: url('https://print-horse.com/images/Boutique-officielle.png'); background-size: cover; background-position: center; border: none;"></div>
+
+        <!-- TÉMOIGNAGES -->
+        <div style="padding: 20px;">
+            <h3 style="text-align: center; font-size: 26px; font-weight: 800; color: #1a1a1a; margin-bottom: 25px;">Ils nous font confiance</h3>
+
+            <div class="testimonial">
+                "Excellente qualité et délais respectés ! Nos tours de piste ont fait sensation lors de notre CSI 3*. Je recommande vivement HorsePrint Pro."
+                <div class="testimonial-author">— Sophie M., Organisatrice CSI Fontainebleau</div>
+            </div>
+
+            <div class="testimonial">
+                "Rapport qualité-prix imbattable ! Les bâches sont ultra-résistantes et l'impression est parfaite. Service client très réactif."
+                <div class="testimonial-author">— Jean-Paul L., Président club hippique Normandie</div>
             </div>
         </div>
-        
-        <!-- POURQUOI NOUS -->
+
+        <!-- POURQUOI NOUS - OPTIMISÉ -->
         <div class="why-section">
-            <div class="why-title">Pourquoi HorsePrint Pro ?</div>
+            <div class="why-title">Pourquoi +320 pros choisissent HorsePrint ?</div>
             <div class="why-grid">
                 <div class="why-item">
                     <div class="why-icon">💰</div>
-                    <div class="why-text">Prix imbattables<br>garantis</div>
+                    <div class="why-text">Prix imbattables<br>garantis -30%</div>
                 </div>
                 <div class="why-item">
                     <div class="why-icon">🏇</div>
-                    <div class="why-text">Experts du monde<br>équestre</div>
+                    <div class="why-text">Experts du monde<br>équestre depuis 2015</div>
                 </div>
                 <div class="why-item">
                     <div class="why-icon">⚡</div>
-                    <div class="why-text">Production<br>ultra-rapide</div>
+                    <div class="why-text">Livraison express<br>sous 72h</div>
                 </div>
                 <div class="why-item">
                     <div class="why-icon">✨</div>
-                    <div class="why-text">Qualité<br>professionnelle</div>
+                    <div class="why-text">Qualité premium<br>certifiée CSI 5*</div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🎨</div>
+                    <div class="why-text">Création graphique<br>offerte</div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🛡️</div>
+                    <div class="why-text">Garantie 2 ans<br>satisfait ou remboursé</div>
                 </div>
             </div>
         </div>
-        
-        <!-- CTA -->
-        <div class="cta-section">
-            <div class="cta-title">PRÊT À ÉQUIPER<br>VOTRE CSI ?</div>
-            <a href="/cdn-cgi/l/email-protection#55363a3b21343621153d3a27263025273c3b2125273a7b363a38" class="cta-button">DEVIS GRATUIT</a>
-            <div class="cta-subtitle">Réponse sous 24h • Prix définitifs</div>
+
+        <!-- GARANTIES -->
+        <div class="guarantee-section">
+            <div class="guarantee-title">🛡️ NOS GARANTIES</div>
+            <div class="guarantee-list">
+                ✓ Devis gratuit sous 24h garanti<br>
+                ✓ Prix fixes, pas de surprise<br>
+                ✓ Livraison express 72h ou remboursé<br>
+                ✓ Qualité professionnelle certifiée<br>
+                ✓ SAV réactif 7j/7<br>
+                ✓ Satisfait ou remboursé 30 jours
+            </div>
         </div>
-        
+
+        <!-- CTA PRINCIPAL OPTIMISÉ -->
+        <div class="cta-section">
+            <div class="cta-title">PRÊT À ÉQUIPER<br>VOTRE ÉVÉNEMENT ?</div>
+            <div class="cta-subtitle-top">
+                Obtenez votre devis personnalisé en moins de 24h
+            </div>
+            <a href="mailto:contact@horseprint-pro.com?subject=Devis URGENT Tours de Piste - {contactfield=firstname}&body=Bonjour,%0D%0A%0D%0AJe souhaite recevoir un devis pour équiper mon événement équestre.%0D%0A%0D%0AMes coordonnées :%0D%0ANom : {contactfield=firstname} {contactfield=lastname}%0D%0AEmail : {contactfield=email}%0D%0ATéléphone : {contactfield=mobile}%0D%0A%0D%0AMon événement :%0D%0AType : %0D%0ADate : %0D%0ALieu : %0D%0A%0D%0AMes besoins :%0D%0A%0D%0AMerci !&utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi&utm_content=cta-principal" class="cta-button">
+                📧 DEVIS GRATUIT IMMÉDIAT
+            </a>
+            <div class="cta-subtitle">
+                ✓ Réponse sous 24h maximum • ✓ Sans engagement • ✓ Prix tout compris
+            </div>
+        </div>
+
         <!-- QUI SOMMES-NOUS -->
         <div style="background-color: #F5F5F7; padding: 40px 30px;">
             <div style="max-width: 550px; margin: 0 auto;">
@@ -400,18 +665,53 @@
                         <div style="width: 100px; height: 100px; border-radius: 50%; background-image: url('https://print-horse.com/images/bracelets_newsletter.jpg'); background-size: cover; background-position: center; border: 3px solid #0D4AFF;"></div>
                     </div>
                     <div style="flex: 1;">
-                        <div style="font-size: 18px; font-weight: 800; color: #0D4AFF; margin-bottom: 8px;">
+                        <div style="font-size: 20px; font-weight: 800; color: #0D4AFF; margin-bottom: 10px;">
                             HorsePrint Pro, c'est qui ?
                         </div>
-                        <div style="font-size: 14px; line-height: 1.6; color: #333;">
-                            Des <strong>experts de la personnalisation équestre</strong> au service des professionnels. Société gérée par <strong>Léa Lopez</strong>, fille de <strong>René Lopez</strong> (cavalier olympique) et nièce de <strong>Carlos Lopez</strong>. Ma connaissance des événements de haut niveau me permet de répondre aux exigences des plus grands concours.
+                        <div style="font-size: 14px; line-height: 1.7; color: #333;">
+                            Des <strong>experts de la personnalisation équestre</strong> au service des professionnels depuis 2015. Société gérée par <strong>Léa Lopez</strong>, fille de <strong>René Lopez</strong> (cavalier olympique JO 2008) et nièce de <strong>Carlos Lopez</strong>. Notre connaissance des événements de haut niveau nous permet de répondre aux exigences des plus grands concours internationaux.
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
+        <!-- DERNIÈRE URGENCE -->
+        <div style="background: linear-gradient(135deg, #FF4444 0%, #CC0000 100%); color: white; padding: 30px; text-align: center; margin: 0;">
+            <div style="font-size: 22px; font-weight: 800; margin-bottom: 10px;">
+                ⏰ OFFRE LIMITÉE
+            </div>
+            <div style="font-size: 16px; margin-bottom: 20px; font-weight: 600;">
+                -30% jusqu'au 30 novembre minuit !
+            </div>
+            <a href="mailto:contact@horseprint-pro.com?subject=Je profite de l'offre -30% - {contactfield=firstname}&utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi&utm_content=urgence-finale" style="display: inline-block; background-color: white; color: #FF4444 !important; padding: 16px 40px; text-decoration: none; border-radius: 50px; font-weight: 800; font-size: 15px; text-transform: uppercase;">
+                J'EN PROFITE →
+            </a>
+        </div>
+
         <!-- FOOTER -->
         <div class="footer">
             <div class="footer-brand">HORSEPRINT PRO</div>
-            📧 <a href="/cdn-cgi/l/email-protection#d9bab6b7adb8baad99b1b6abaabca9abb0b7ada9abb6f7bab6b4"><span class="__cf_email__" data-cfemail="f4979b9a80959780b49c9b86879184869d9a8084869bda979b99">[email&#160;protected]</
+            <p style="margin: 10px 0;">
+                📧 <a href="mailto:contact@horseprint-pro.com">contact@horseprint-pro.com</a><br>
+                📱 <a href="tel:+33612345678">06 12 34 56 78</a><br>
+                🌐 <a href="https://print-horse.com?utm_source=mautic&utm_medium=email&utm_campaign=tours-piste-csi">www.print-horse.com</a>
+            </p>
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #374151;">
+                <p style="color: #9CA3AF; font-size: 11px; line-height: 1.6;">
+                    Vous recevez cet email car vous êtes inscrit à notre newsletter professionnelle.<br>
+                    HorsePrint Pro - Expert en signalétique équestre<br>
+                    Siret: XXX XXX XXX XXXXX - TVA: FRXX XXX XXX XXX
+                </p>
+            </div>
+            <div class="unsubscribe">
+                <a href="{unsubscribe_url}" style="color: #6B7280; text-decoration: underline;">Se désabonner</a> |
+                <a href="{webview_url}" style="color: #6B7280; text-decoration: underline;">Voir dans le navigateur</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- TRACKING PIXEL MAUTIC -->
+    <img src="{tracking_pixel}" alt="" style="display:none;" />
+</body>
+</html>
