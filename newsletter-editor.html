@@ -25,7 +25,7 @@
 
         /* SIDEBAR */
         .sidebar {
-            width: 340px;
+            width: 360px;
             background: #2c3e50;
             color: white;
             padding: 20px;
@@ -116,6 +116,14 @@
             background: #e67e22;
         }
 
+        .btn-purple {
+            background: #9b59b6;
+        }
+
+        .btn-purple:hover {
+            background: #8e44ad;
+        }
+
         textarea {
             width: 100%;
             min-height: 80px;
@@ -166,6 +174,40 @@
 
         input[type="checkbox"] {
             width: auto;
+        }
+
+        /* BLOCKS LIBRARY */
+        .blocks-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .block-item {
+            background: #2c3e50;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+            font-size: 12px;
+        }
+
+        .block-item:hover {
+            background: #34495e;
+            border-color: #3498db;
+            transform: translateX(5px);
+        }
+
+        .block-item-title {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .block-item-desc {
+            font-size: 10px;
+            color: #95a5a6;
         }
 
         /* NEWSLETTERS LIST */
@@ -303,16 +345,17 @@
         }
 
         [data-editable="true"]:hover::before {
-            content: '✏️';
+            content: '✏️ Cliquez pour éditer';
             position: absolute;
-            top: -20px;
+            top: -25px;
             left: 0;
             background: #3498db;
             color: white;
-            padding: 2px 8px;
+            padding: 3px 10px;
             border-radius: 3px;
             font-size: 11px;
             z-index: 10;
+            white-space: nowrap;
         }
 
         [data-editable="true"]:hover {
@@ -334,8 +377,8 @@
             padding: 25px;
             border-radius: 10px;
             box-shadow: 0 10px 50px rgba(0,0,0,0.4);
-            min-width: 500px;
-            max-width: 700px;
+            min-width: 550px;
+            max-width: 750px;
             max-height: 85vh;
             overflow-y: auto;
             z-index: 1000;
@@ -419,6 +462,17 @@
             margin-top: 20px;
         }
 
+        .insert-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px dashed #3498db;
+        }
+
         .overlay {
             position: fixed;
             top: 0;
@@ -489,6 +543,16 @@
             margin-top: 10px;
         }
 
+        .element-type-badge {
+            display: inline-block;
+            background: #9b59b6;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+            margin-left: 8px;
+        }
+
         /* RESPONSIVE */
         @media (max-width: 768px) {
             .sidebar {
@@ -523,9 +587,48 @@
                 <button class="btn btn-success" onclick="loadHTML()">Charger le HTML</button>
             </div>
 
+            <!-- ADD BLOCKS -->
+            <div class="section">
+                <div class="section-title">➕ 2. Ajouter des blocs</div>
+                <div class="blocks-grid">
+                    <div class="block-item" onclick="insertBlock('image-text-left')">
+                        <div class="block-item-title">🖼️ Image + Texte (gauche)</div>
+                        <div class="block-item-desc">Image à gauche, texte à droite</div>
+                    </div>
+                    <div class="block-item" onclick="insertBlock('image-text-right')">
+                        <div class="block-item-title">🖼️ Image + Texte (droite)</div>
+                        <div class="block-item-desc">Texte à gauche, image à droite</div>
+                    </div>
+                    <div class="block-item" onclick="insertBlock('image-text-center')">
+                        <div class="block-item-title">🖼️ Image + Texte (centre)</div>
+                        <div class="block-item-desc">Image centrée avec texte dessous</div>
+                    </div>
+                    <div class="block-item" onclick="insertBlock('cta-button')">
+                        <div class="block-item-title">🎯 Bouton CTA</div>
+                        <div class="block-item-desc">Bouton d'appel à l'action</div>
+                    </div>
+                    <div class="block-item" onclick="insertBlock('colored-section')">
+                        <div class="block-item-title">🎨 Section colorée</div>
+                        <div class="block-item-desc">Bloc avec fond coloré</div>
+                    </div>
+                    <div class="block-item" onclick="insertBlock('title-subtitle')">
+                        <div class="block-item-title">📝 Titre + Sous-titre</div>
+                        <div class="block-item-desc">Titre H2 + paragraphe</div>
+                    </div>
+                    <div class="block-item" onclick="insertBlock('two-columns')">
+                        <div class="block-item-title">📊 2 Colonnes</div>
+                        <div class="block-item-desc">Grille 2 colonnes égales</div>
+                    </div>
+                    <div class="block-item" onclick="insertBlock('product-card')">
+                        <div class="block-item-title">🛒 Carte produit</div>
+                        <div class="block-item-desc">Image + titre + prix + bouton</div>
+                    </div>
+                </div>
+            </div>
+
             <!-- QUICK TOOLS -->
             <div class="section">
-                <div class="section-title">🔧 2. Outils rapides</div>
+                <div class="section-title">🔧 3. Outils rapides</div>
 
                 <label>Rechercher</label>
                 <input type="text" id="searchText" placeholder="Texte à chercher">
@@ -543,7 +646,7 @@
 
             <!-- NEWSLETTERS MANAGEMENT -->
             <div class="section">
-                <div class="section-title">💾 3. Mes newsletters</div>
+                <div class="section-title">💾 4. Mes newsletters</div>
                 <input type="text" id="newsletterName" placeholder="Nom de la newsletter">
                 <button class="btn btn-success" onclick="saveNewsletter()">Sauvegarder</button>
                 <div class="newsletters-list" id="newslettersList"></div>
@@ -551,7 +654,7 @@
 
             <!-- EXPORT -->
             <div class="section">
-                <div class="section-title">📤 4. Exporter</div>
+                <div class="section-title">📤 5. Exporter</div>
                 <button class="btn" onclick="copyToClipboard()">📋 Copier HTML</button>
                 <button class="btn btn-secondary" onclick="downloadHTML()">⬇️ Télécharger .html</button>
                 <div class="stats" id="stats">
@@ -584,9 +687,9 @@
                     <div style="padding: 60px 40px; text-align: center; color: #95a5a6;">
                         <h2 style="font-size: 32px; margin-bottom: 20px;">👋 Bienvenue dans l'éditeur Pro</h2>
                         <p style="margin-top: 10px; font-size: 16px;">1️⃣ Collez votre HTML dans la barre latérale</p>
-                        <p style="margin-top: 8px; font-size: 16px;">2️⃣ Cliquez sur "Charger le HTML"</p>
+                        <p style="margin-top: 8px; font-size: 16px;">2️⃣ Ou ajoutez des blocs préconfigurés</p>
                         <p style="margin-top: 8px; font-size: 16px;">3️⃣ Cliquez sur n'importe quel élément pour l'éditer</p>
-                        <p style="margin-top: 20px; font-size: 14px; color: #bdc3c7;">✨ Fonctionnalités: Suppression • Police • Espacement • Bordures • Et bien plus !</p>
+                        <p style="margin-top: 20px; font-size: 14px; color: #bdc3c7;">✨ Tous les éléments sont maintenant cliquables !</p>
                     </div>
                 </div>
             </div>
@@ -608,12 +711,131 @@
 
     <script>
         let currentElement = null;
-        let originalStyles = {};
         let newsletters = JSON.parse(localStorage.getItem('newsletters') || '{}');
         let currentNewsletterId = null;
         let history = [];
         let historyIndex = -1;
         let zoomLevel = 100;
+
+        // BLOCKS TEMPLATES
+        const blockTemplates = {
+            'image-text-left': `
+                <div style="display: flex; gap: 20px; align-items: center; padding: 30px; background: #ffffff; margin: 20px 0;">
+                    <img src="https://via.placeholder.com/250x200" alt="Image" style="width: 250px; border-radius: 5px;">
+                    <div style="flex: 1;">
+                        <h3 style="font-size: 24px; margin-bottom: 10px; color: #2c3e50;">Titre de la section</h3>
+                        <p style="font-size: 16px; line-height: 1.6; color: #555;">Cliquez pour modifier ce texte. Ajoutez votre contenu ici.</p>
+                    </div>
+                </div>
+            `,
+            'image-text-right': `
+                <div style="display: flex; gap: 20px; align-items: center; padding: 30px; background: #ffffff; margin: 20px 0;">
+                    <div style="flex: 1;">
+                        <h3 style="font-size: 24px; margin-bottom: 10px; color: #2c3e50;">Titre de la section</h3>
+                        <p style="font-size: 16px; line-height: 1.6; color: #555;">Cliquez pour modifier ce texte. Ajoutez votre contenu ici.</p>
+                    </div>
+                    <img src="https://via.placeholder.com/250x200" alt="Image" style="width: 250px; border-radius: 5px;">
+                </div>
+            `,
+            'image-text-center': `
+                <div style="text-align: center; padding: 30px; background: #ffffff; margin: 20px 0;">
+                    <img src="https://via.placeholder.com/400x300" alt="Image" style="width: 100%; max-width: 400px; border-radius: 5px; margin-bottom: 20px;">
+                    <h3 style="font-size: 24px; margin-bottom: 10px; color: #2c3e50;">Titre de la section</h3>
+                    <p style="font-size: 16px; line-height: 1.6; color: #555; max-width: 600px; margin: 0 auto;">Cliquez pour modifier ce texte. Ajoutez votre contenu ici.</p>
+                </div>
+            `,
+            'cta-button': `
+                <div style="text-align: center; padding: 40px; background: #ffffff; margin: 20px 0;">
+                    <a href="#" style="display: inline-block; padding: 15px 40px; background: #3498db; color: white; text-decoration: none; border-radius: 5px; font-size: 18px; font-weight: bold;">Cliquez ici</a>
+                </div>
+            `,
+            'colored-section': `
+                <div style="padding: 40px; background: #3498db; color: white; margin: 20px 0; border-radius: 5px;">
+                    <h2 style="font-size: 28px; margin-bottom: 15px;">Section en couleur</h2>
+                    <p style="font-size: 16px; line-height: 1.6;">Cliquez pour modifier le texte et les couleurs de cette section.</p>
+                </div>
+            `,
+            'title-subtitle': `
+                <div style="padding: 30px; background: #ffffff; margin: 20px 0;">
+                    <h2 style="font-size: 32px; margin-bottom: 10px; color: #2c3e50;">Titre principal</h2>
+                    <p style="font-size: 18px; color: #7f8c8d;">Sous-titre ou description courte</p>
+                </div>
+            `,
+            'two-columns': `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 30px; background: #ffffff; margin: 20px 0;">
+                    <div style="padding: 20px; background: #ecf0f1; border-radius: 5px;">
+                        <h3 style="font-size: 20px; margin-bottom: 10px; color: #2c3e50;">Colonne 1</h3>
+                        <p style="font-size: 14px; color: #555;">Contenu de la première colonne.</p>
+                    </div>
+                    <div style="padding: 20px; background: #ecf0f1; border-radius: 5px;">
+                        <h3 style="font-size: 20px; margin-bottom: 10px; color: #2c3e50;">Colonne 2</h3>
+                        <p style="font-size: 14px; color: #555;">Contenu de la deuxième colonne.</p>
+                    </div>
+                </div>
+            `,
+            'product-card': `
+                <div style="max-width: 300px; margin: 20px auto; padding: 20px; background: #ffffff; border: 1px solid #ddd; border-radius: 8px; text-align: center;">
+                    <img src="https://via.placeholder.com/250x250" alt="Produit" style="width: 100%; border-radius: 5px; margin-bottom: 15px;">
+                    <h3 style="font-size: 20px; margin-bottom: 10px; color: #2c3e50;">Nom du produit</h3>
+                    <p style="font-size: 24px; font-weight: bold; color: #27ae60; margin-bottom: 15px;">29,99€</p>
+                    <a href="#" style="display: inline-block; padding: 10px 30px; background: #3498db; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Acheter</a>
+                </div>
+            `
+        };
+
+        // INDIVIDUAL ELEMENTS
+        const individualElements = {
+            'h1': '<h1 style="font-size: 36px; margin: 20px 0; color: #2c3e50;">Titre H1</h1>',
+            'h2': '<h2 style="font-size: 28px; margin: 15px 0; color: #2c3e50;">Titre H2</h2>',
+            'h3': '<h3 style="font-size: 22px; margin: 12px 0; color: #2c3e50;">Titre H3</h3>',
+            'p': '<p style="font-size: 16px; line-height: 1.6; margin: 10px 0; color: #555;">Paragraphe de texte. Cliquez pour modifier.</p>',
+            'image': '<img src="https://via.placeholder.com/600x400" alt="Image" style="width: 100%; max-width: 600px; margin: 15px 0; border-radius: 5px;">',
+            'link': '<a href="#" style="color: #3498db; text-decoration: underline; font-size: 16px;">Lien cliquable</a>',
+            'button': '<a href="#" style="display: inline-block; padding: 12px 30px; background: #3498db; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 10px 0;">Bouton</a>',
+            'hr': '<hr style="border: none; border-top: 2px solid #ddd; margin: 30px 0;">',
+            'spacer': '<div style="height: 40px;"></div>'
+        };
+
+        // INSERT BLOCK
+        function insertBlock(blockType) {
+            if (!blockTemplates[blockType]) return;
+
+            saveToHistory();
+            const preview = document.getElementById('preview');
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = blockTemplates[blockType];
+            preview.appendChild(tempDiv.firstElementChild);
+            makeElementsEditable();
+            updateStats();
+            showToast(`✅ Bloc "${blockType}" ajouté !`);
+        }
+
+        // INSERT ELEMENT
+        function insertElement(elementType, position) {
+            if (!currentElement) return;
+
+            let html = '';
+            if (individualElements[elementType]) {
+                html = individualElements[elementType];
+            }
+
+            if (!html) return;
+
+            saveToHistory();
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            const newElement = tempDiv.firstElementChild;
+
+            if (position === 'before') {
+                currentElement.parentNode.insertBefore(newElement, currentElement);
+            } else {
+                currentElement.parentNode.insertBefore(newElement, currentElement.nextSibling);
+            }
+
+            makeElementsEditable();
+            updateStats();
+            showToast(`✅ Élément ajouté ${position === 'before' ? 'avant' : 'après'} !`);
+        }
 
         // LOAD HTML
         function loadHTML() {
@@ -631,34 +853,32 @@
             showToast('✅ HTML chargé avec succès !');
         }
 
-        // MAKE ELEMENTS EDITABLE
+        // MAKE ALL ELEMENTS EDITABLE
         function makeElementsEditable() {
             const preview = document.getElementById('preview');
 
-            // Textes éditables
-            const textElements = preview.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span, div, a, button, td, th, li, label');
-            textElements.forEach(el => {
-                const hasDirectText = Array.from(el.childNodes).some(node => node.nodeType === 3 && node.textContent.trim());
-                if (hasDirectText || (el.children.length === 0 && el.textContent.trim())) {
-                    el.setAttribute('data-editable', 'true');
-                    el.setAttribute('data-type', el.tagName === 'A' ? 'link' : 'text');
-                    el.onclick = (e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        editElement(el);
-                    };
-                }
-            });
+            // ALL ELEMENTS (divs, sections, tables, etc.)
+            const allElements = preview.querySelectorAll('*');
+            allElements.forEach(el => {
+                // Skip script and style tags
+                if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE') return;
 
-            // Images éditables
-            const images = preview.querySelectorAll('img');
-            images.forEach(img => {
-                img.setAttribute('data-editable', 'true');
-                img.setAttribute('data-type', 'image');
-                img.onclick = (e) => {
+                // Make editable
+                el.setAttribute('data-editable', 'true');
+
+                // Determine type
+                if (el.tagName === 'IMG') {
+                    el.setAttribute('data-type', 'image');
+                } else if (el.tagName === 'A') {
+                    el.setAttribute('data-type', 'link');
+                } else {
+                    el.setAttribute('data-type', 'container');
+                }
+
+                el.onclick = (e) => {
                     e.stopPropagation();
                     e.preventDefault();
-                    editElement(img);
+                    editElement(el);
                 };
             });
         }
@@ -678,263 +898,65 @@
             const editFields = document.getElementById('editFields');
             editFields.innerHTML = '';
 
-            // COMMON: DELETE BUTTON
+            // ELEMENT INFO
+            const tagName = element.tagName.toLowerCase();
+            editFields.innerHTML += `
+                <div style="background: #f8f9fa; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+                    <strong>Élément :</strong> <span class="element-type-badge">&lt;${tagName}&gt;</span>
+                </div>
+            `;
+
+            // INSERT BEFORE/AFTER BUTTONS
+            editFields.innerHTML += `
+                <div class="insert-actions">
+                    <button class="btn btn-purple" onclick="showInsertMenu('before')">➕ Insérer avant</button>
+                    <button class="btn btn-purple" onclick="showInsertMenu('after')">➕ Insérer après</button>
+                </div>
+            `;
+
+            // DELETE BUTTON
             editFields.innerHTML += `
                 <button class="btn btn-danger" onclick="deleteElement()" style="margin-bottom: 20px;">
                     🗑️ Supprimer cet élément
                 </button>
             `;
 
-            if (type === 'text' || type === 'link') {
-                // TEXT CONTENT
+            // TEXT CONTENT (for all elements with text)
+            if (element.textContent && element.textContent.trim()) {
                 editFields.innerHTML += `
                     <div class="edit-field">
-                        <label>📝 Texte</label>
+                        <label>📝 Contenu texte</label>
                         <textarea id="editText">${element.textContent}</textarea>
                     </div>
                 `;
+            }
 
-                // LINK HREF
-                if (type === 'link') {
-                    editFields.innerHTML += `
-                        <div class="edit-field">
-                            <label>🔗 URL du lien</label>
-                            <input type="text" id="editHref" value="${element.href || ''}">
-                        </div>
-                    `;
-                }
-
-                // FONT FAMILY
-                const currentFont = getActualStyle(element, 'fontFamily');
+            // LINK HREF
+            if (type === 'link' || tagName === 'a') {
                 editFields.innerHTML += `
                     <div class="edit-field">
-                        <label>🔤 Police de caractères</label>
-                        <select id="editFontFamily">
-                            <option value="">-- Par défaut --</option>
-                            <option value="Arial, sans-serif" ${currentFont.includes('Arial') ? 'selected' : ''}>Arial</option>
-                            <option value="'Times New Roman', serif" ${currentFont.includes('Times') ? 'selected' : ''}>Times New Roman</option>
-                            <option value="Georgia, serif" ${currentFont.includes('Georgia') ? 'selected' : ''}>Georgia</option>
-                            <option value="'Courier New', monospace" ${currentFont.includes('Courier') ? 'selected' : ''}>Courier New</option>
-                            <option value="Verdana, sans-serif" ${currentFont.includes('Verdana') ? 'selected' : ''}>Verdana</option>
-                            <option value="'Trebuchet MS', sans-serif" ${currentFont.includes('Trebuchet') ? 'selected' : ''}>Trebuchet MS</option>
-                            <option value="'Comic Sans MS', cursive" ${currentFont.includes('Comic') ? 'selected' : ''}>Comic Sans MS</option>
-                            <option value="Impact, sans-serif" ${currentFont.includes('Impact') ? 'selected' : ''}>Impact</option>
-                            <option value="'Palatino Linotype', serif" ${currentFont.includes('Palatino') ? 'selected' : ''}>Palatino</option>
-                            <option value="'Lucida Console', monospace" ${currentFont.includes('Lucida') ? 'selected' : ''}>Lucida Console</option>
-                            <option value="'Inter', sans-serif" ${currentFont.includes('Inter') ? 'selected' : ''}>Inter</option>
-                        </select>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="applyFont" ${currentFont ? 'checked' : ''}>
-                            <label for="applyFont">Appliquer la police</label>
-                        </div>
+                        <label>🔗 URL du lien</label>
+                        <input type="text" id="editHref" value="${element.href || ''}">
                     </div>
                 `;
+            }
 
-                // FONT SIZE
-                const currentFontSize = getActualStyle(element, 'fontSize');
-                const fontSize = parseInt(currentFontSize) || 16;
-                editFields.innerHTML += `
-                    <div class="edit-field">
-                        <label>📏 Taille de police (${fontSize}px)</label>
-                        <input type="range" id="editFontSize" min="8" max="72" value="${fontSize}"
-                               oninput="document.getElementById('fontSizeValue').textContent = this.value + 'px'">
-                        <div style="display: flex; justify-content: space-between; font-size: 11px; color: #7f8c8d;">
-                            <span>8px</span>
-                            <span id="fontSizeValue">${fontSize}px</span>
-                            <span>72px</span>
-                        </div>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="applyFontSize" ${currentFontSize ? 'checked' : ''}>
-                            <label for="applyFontSize">Modifier la taille</label>
-                        </div>
-                    </div>
-                `;
-
-                // FONT WEIGHT
-                const currentWeight = getActualStyle(element, 'fontWeight');
-                editFields.innerHTML += `
-                    <div class="edit-field">
-                        <label>💪 Graisse de police</label>
-                        <select id="editFontWeight">
-                            <option value="">-- Par défaut --</option>
-                            <option value="300" ${currentWeight === '300' ? 'selected' : ''}>300 - Light</option>
-                            <option value="400" ${currentWeight === '400' || currentWeight === 'normal' ? 'selected' : ''}>400 - Normal</option>
-                            <option value="500" ${currentWeight === '500' ? 'selected' : ''}>500 - Medium</option>
-                            <option value="600" ${currentWeight === '600' ? 'selected' : ''}>600 - Semi-bold</option>
-                            <option value="700" ${currentWeight === '700' || currentWeight === 'bold' ? 'selected' : ''}>700 - Bold</option>
-                            <option value="800" ${currentWeight === '800' ? 'selected' : ''}>800 - Extra-bold</option>
-                            <option value="900" ${currentWeight === '900' ? 'selected' : ''}>900 - Black</option>
-                        </select>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="applyFontWeight" ${currentWeight ? 'checked' : ''}>
-                            <label for="applyFontWeight">Appliquer la graisse</label>
-                        </div>
-                    </div>
-                `;
-
-                // TEXT ALIGN
-                const currentAlign = getActualStyle(element, 'textAlign');
-                editFields.innerHTML += `
-                    <div class="edit-field">
-                        <label>↔️ Alignement du texte</label>
-                        <select id="editTextAlign">
-                            <option value="">-- Par défaut --</option>
-                            <option value="left" ${currentAlign === 'left' ? 'selected' : ''}>⬅️ Gauche</option>
-                            <option value="center" ${currentAlign === 'center' ? 'selected' : ''}>↔️ Centre</option>
-                            <option value="right" ${currentAlign === 'right' ? 'selected' : ''}>➡️ Droite</option>
-                            <option value="justify" ${currentAlign === 'justify' ? 'selected' : ''}>⬌ Justifié</option>
-                        </select>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="applyTextAlign" ${currentAlign ? 'checked' : ''}>
-                            <label for="applyTextAlign">Appliquer l'alignement</label>
-                        </div>
-                    </div>
-                `;
-
-                // COLOR
-                const currentColor = getActualStyle(element, 'color');
-                const colorValue = rgbToHex(currentColor) || '#000000';
-                editFields.innerHTML += `
-                    <div class="edit-field">
-                        <label>🎨 Couleur du texte</label>
-                        <input type="color" id="editColor" value="${colorValue}">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="applyColor" ${currentColor ? 'checked' : ''}>
-                            <label for="applyColor">Appliquer la couleur</label>
-                        </div>
-                    </div>
-                `;
-
-                // BACKGROUND COLOR
-                const currentBg = getActualStyle(element, 'backgroundColor');
-                const bgValue = rgbToHex(currentBg) || '#ffffff';
-                editFields.innerHTML += `
-                    <div class="edit-field">
-                        <label>🖌️ Couleur de fond</label>
-                        <input type="color" id="editBgColor" value="${bgValue}">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="applyBgColor" ${currentBg ? 'checked' : ''}>
-                            <label for="applyBgColor">Appliquer la couleur de fond</label>
-                        </div>
-                    </div>
-                `;
-
-                // PADDING (ESPACEMENT INTERNE)
-                editFields.innerHTML += `
-                    <div class="edit-field">
-                        <label>📐 Espacement interne (Padding)</label>
-                        <div class="spacing-grid">
-                            <div>
-                                <label style="font-size: 11px;">⬆️ Haut (px)</label>
-                                <input type="number" id="paddingTop" value="${parseInt(getActualStyle(element, 'paddingTop')) || 0}" min="0">
-                            </div>
-                            <div>
-                                <label style="font-size: 11px;">➡️ Droite (px)</label>
-                                <input type="number" id="paddingRight" value="${parseInt(getActualStyle(element, 'paddingRight')) || 0}" min="0">
-                            </div>
-                            <div>
-                                <label style="font-size: 11px;">⬇️ Bas (px)</label>
-                                <input type="number" id="paddingBottom" value="${parseInt(getActualStyle(element, 'paddingBottom')) || 0}" min="0">
-                            </div>
-                            <div>
-                                <label style="font-size: 11px;">⬅️ Gauche (px)</label>
-                                <input type="number" id="paddingLeft" value="${parseInt(getActualStyle(element, 'paddingLeft')) || 0}" min="0">
-                            </div>
-                        </div>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="applyPadding" ${getActualStyle(element, 'padding') ? 'checked' : ''}>
-                            <label for="applyPadding">Modifier le padding</label>
-                        </div>
-                    </div>
-                `;
-
-                // MARGIN (ESPACEMENT EXTERNE)
-                editFields.innerHTML += `
-                    <div class="edit-field">
-                        <label>📏 Espacement externe (Margin)</label>
-                        <div class="spacing-grid">
-                            <div>
-                                <label style="font-size: 11px;">⬆️ Haut (px)</label>
-                                <input type="number" id="marginTop" value="${parseInt(getActualStyle(element, 'marginTop')) || 0}">
-                            </div>
-                            <div>
-                                <label style="font-size: 11px;">➡️ Droite (px)</label>
-                                <input type="number" id="marginRight" value="${parseInt(getActualStyle(element, 'marginRight')) || 0}">
-                            </div>
-                            <div>
-                                <label style="font-size: 11px;">⬇️ Bas (px)</label>
-                                <input type="number" id="marginBottom" value="${parseInt(getActualStyle(element, 'marginBottom')) || 0}">
-                            </div>
-                            <div>
-                                <label style="font-size: 11px;">⬅️ Gauche (px)</label>
-                                <input type="number" id="marginLeft" value="${parseInt(getActualStyle(element, 'marginLeft')) || 0}">
-                            </div>
-                        </div>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="applyMargin" ${getActualStyle(element, 'margin') ? 'checked' : ''}>
-                            <label for="applyMargin">Modifier le margin</label>
-                        </div>
-                    </div>
-                `;
-
-                // BORDER
-                const borderWidth = parseInt(getActualStyle(element, 'borderWidth')) || 1;
-                const borderColor = rgbToHex(getActualStyle(element, 'borderColor')) || '#000000';
-                const borderRadius = parseInt(getActualStyle(element, 'borderRadius')) || 0;
-                editFields.innerHTML += `
-                    <div class="edit-field">
-                        <label>🔲 Bordure</label>
-                        <div class="spacing-grid">
-                            <div>
-                                <label style="font-size: 11px;">Épaisseur (px)</label>
-                                <input type="number" id="borderWidth" value="${borderWidth}" min="0" max="20">
-                            </div>
-                            <div>
-                                <label style="font-size: 11px;">Couleur</label>
-                                <input type="color" id="borderColor" value="${borderColor}">
-                            </div>
-                        </div>
-                        <label style="font-size: 11px; margin-top: 10px;">Arrondi (px)</label>
-                        <input type="number" id="borderRadius" value="${borderRadius}" min="0" max="50">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="applyBorder" ${getActualStyle(element, 'border') ? 'checked' : ''}>
-                            <label for="applyBorder">Appliquer la bordure</label>
-                        </div>
-                    </div>
-                `;
-
-            } else if (type === 'image') {
+            // IMAGE
+            if (type === 'image' || tagName === 'img') {
                 editFields.innerHTML += `
                     <div class="edit-field">
                         <label>🖼️ URL de l'image</label>
-                        <input type="text" id="editImageSrc" value="${element.src}">
-                        <div class="help-text">URL complète de l'image</div>
+                        <input type="text" id="editImageSrc" value="${element.src || ''}">
                     </div>
                     <div class="edit-field">
                         <label>📝 Texte alternatif</label>
                         <input type="text" id="editImageAlt" value="${element.alt || ''}">
-                        <div class="help-text">Description pour l'accessibilité</div>
-                    </div>
-                    <div class="edit-field">
-                        <label>📏 Largeur</label>
-                        <input type="text" id="editImageWidth" value="${element.style.width || ''}">
-                        <div class="help-text">Ex: 100%, 500px, auto</div>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="applyImageWidth" ${element.style.width ? 'checked' : ''}>
-                            <label for="applyImageWidth">Modifier la largeur</label>
-                        </div>
-                    </div>
-                    <div class="edit-field">
-                        <label>📐 Hauteur</label>
-                        <input type="text" id="editImageHeight" value="${element.style.height || ''}">
-                        <div class="help-text">Ex: 300px, auto</div>
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="applyImageHeight" ${element.style.height ? 'checked' : ''}>
-                            <label for="applyImageHeight">Modifier la hauteur</label>
-                        </div>
                     </div>
                 `;
             }
+
+            // STYLES FOR ALL ELEMENTS
+            addStyleControls(editFields, element);
 
             // SAVE AND CANCEL BUTTONS
             editFields.innerHTML += `
@@ -946,6 +968,215 @@
 
             document.getElementById('overlay').classList.add('active');
             document.getElementById('editPanel').classList.add('active');
+        }
+
+        // ADD STYLE CONTROLS
+        function addStyleControls(editFields, element) {
+            // FONT FAMILY
+            const currentFont = getActualStyle(element, 'fontFamily');
+            editFields.innerHTML += `
+                <div class="edit-field">
+                    <label>🔤 Police de caractères</label>
+                    <select id="editFontFamily">
+                        <option value="">-- Par défaut --</option>
+                        <option value="Arial, sans-serif" ${currentFont.includes('Arial') ? 'selected' : ''}>Arial</option>
+                        <option value="'Times New Roman', serif" ${currentFont.includes('Times') ? 'selected' : ''}>Times New Roman</option>
+                        <option value="Georgia, serif" ${currentFont.includes('Georgia') ? 'selected' : ''}>Georgia</option>
+                        <option value="Verdana, sans-serif" ${currentFont.includes('Verdana') ? 'selected' : ''}>Verdana</option>
+                    </select>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="applyFont" ${currentFont ? 'checked' : ''}>
+                        <label for="applyFont">Appliquer la police</label>
+                    </div>
+                </div>
+            `;
+
+            // FONT SIZE
+            const currentFontSize = getActualStyle(element, 'fontSize');
+            const fontSize = parseInt(currentFontSize) || 16;
+            editFields.innerHTML += `
+                <div class="edit-field">
+                    <label>📏 Taille de police (${fontSize}px)</label>
+                    <input type="range" id="editFontSize" min="8" max="72" value="${fontSize}"
+                           oninput="document.getElementById('fontSizeValue').textContent = this.value + 'px'">
+                    <div style="display: flex; justify-content: space-between; font-size: 11px; color: #7f8c8d;">
+                        <span>8px</span>
+                        <span id="fontSizeValue">${fontSize}px</span>
+                        <span>72px</span>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="applyFontSize" ${currentFontSize ? 'checked' : ''}>
+                        <label for="applyFontSize">Modifier la taille</label>
+                    </div>
+                </div>
+            `;
+
+            // TEXT ALIGN
+            const currentAlign = getActualStyle(element, 'textAlign');
+            editFields.innerHTML += `
+                <div class="edit-field">
+                    <label>↔️ Alignement du texte</label>
+                    <select id="editTextAlign">
+                        <option value="">-- Par défaut --</option>
+                        <option value="left" ${currentAlign === 'left' ? 'selected' : ''}>⬅️ Gauche</option>
+                        <option value="center" ${currentAlign === 'center' ? 'selected' : ''}>↔️ Centre</option>
+                        <option value="right" ${currentAlign === 'right' ? 'selected' : ''}>➡️ Droite</option>
+                    </select>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="applyTextAlign" ${currentAlign ? 'checked' : ''}>
+                        <label for="applyTextAlign">Appliquer l'alignement</label>
+                    </div>
+                </div>
+            `;
+
+            // COLOR
+            const currentColor = getActualStyle(element, 'color');
+            const colorValue = rgbToHex(currentColor) || '#000000';
+            editFields.innerHTML += `
+                <div class="edit-field">
+                    <label>🎨 Couleur du texte</label>
+                    <input type="color" id="editColor" value="${colorValue}">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="applyColor" ${currentColor ? 'checked' : ''}>
+                        <label for="applyColor">Appliquer la couleur</label>
+                    </div>
+                </div>
+            `;
+
+            // BACKGROUND COLOR - ALWAYS SHOW
+            const currentBg = getActualStyle(element, 'backgroundColor');
+            const bgValue = rgbToHex(currentBg) || '#ffffff';
+            editFields.innerHTML += `
+                <div class="edit-field">
+                    <label>🖌️ Couleur de fond</label>
+                    <input type="color" id="editBgColor" value="${bgValue}">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="applyBgColor" ${currentBg ? 'checked' : ''}>
+                        <label for="applyBgColor">Appliquer la couleur de fond</label>
+                    </div>
+                </div>
+            `;
+
+            // PADDING
+            editFields.innerHTML += `
+                <div class="edit-field">
+                    <label>📐 Espacement interne (Padding)</label>
+                    <div class="spacing-grid">
+                        <div>
+                            <label style="font-size: 11px;">⬆️ Haut (px)</label>
+                            <input type="number" id="paddingTop" value="${parseInt(getActualStyle(element, 'paddingTop')) || 0}" min="0">
+                        </div>
+                        <div>
+                            <label style="font-size: 11px;">➡️ Droite (px)</label>
+                            <input type="number" id="paddingRight" value="${parseInt(getActualStyle(element, 'paddingRight')) || 0}" min="0">
+                        </div>
+                        <div>
+                            <label style="font-size: 11px;">⬇️ Bas (px)</label>
+                            <input type="number" id="paddingBottom" value="${parseInt(getActualStyle(element, 'paddingBottom')) || 0}" min="0">
+                        </div>
+                        <div>
+                            <label style="font-size: 11px;">⬅️ Gauche (px)</label>
+                            <input type="number" id="paddingLeft" value="${parseInt(getActualStyle(element, 'paddingLeft')) || 0}" min="0">
+                        </div>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="applyPadding" ${getActualStyle(element, 'padding') ? 'checked' : ''}>
+                        <label for="applyPadding">Modifier le padding</label>
+                    </div>
+                </div>
+            `;
+
+            // MARGIN
+            editFields.innerHTML += `
+                <div class="edit-field">
+                    <label>📏 Espacement externe (Margin)</label>
+                    <div class="spacing-grid">
+                        <div>
+                            <label style="font-size: 11px;">⬆️ Haut (px)</label>
+                            <input type="number" id="marginTop" value="${parseInt(getActualStyle(element, 'marginTop')) || 0}">
+                        </div>
+                        <div>
+                            <label style="font-size: 11px;">➡️ Droite (px)</label>
+                            <input type="number" id="marginRight" value="${parseInt(getActualStyle(element, 'marginRight')) || 0}">
+                        </div>
+                        <div>
+                            <label style="font-size: 11px;">⬇️ Bas (px)</label>
+                            <input type="number" id="marginBottom" value="${parseInt(getActualStyle(element, 'marginBottom')) || 0}">
+                        </div>
+                        <div>
+                            <label style="font-size: 11px;">⬅️ Gauche (px)</label>
+                            <input type="number" id="marginLeft" value="${parseInt(getActualStyle(element, 'marginLeft')) || 0}">
+                        </div>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="applyMargin" ${getActualStyle(element, 'margin') ? 'checked' : ''}>
+                        <label for="applyMargin">Modifier le margin</label>
+                    </div>
+                </div>
+            `;
+
+            // BORDER
+            const borderWidth = parseInt(getActualStyle(element, 'borderWidth')) || 1;
+            const borderColor = rgbToHex(getActualStyle(element, 'borderColor')) || '#000000';
+            const borderRadius = parseInt(getActualStyle(element, 'borderRadius')) || 0;
+            editFields.innerHTML += `
+                <div class="edit-field">
+                    <label>🔲 Bordure</label>
+                    <div class="spacing-grid">
+                        <div>
+                            <label style="font-size: 11px;">Épaisseur (px)</label>
+                            <input type="number" id="borderWidth" value="${borderWidth}" min="0" max="20">
+                        </div>
+                        <div>
+                            <label style="font-size: 11px;">Couleur</label>
+                            <input type="color" id="borderColor" value="${borderColor}">
+                        </div>
+                    </div>
+                    <label style="font-size: 11px; margin-top: 10px;">Arrondi (px)</label>
+                    <input type="number" id="borderRadius" value="${borderRadius}" min="0" max="50">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="applyBorder" ${getActualStyle(element, 'border') ? 'checked' : ''}>
+                        <label for="applyBorder">Appliquer la bordure</label>
+                    </div>
+                </div>
+            `;
+
+            // WIDTH
+            const currentWidth = getActualStyle(element, 'width');
+            editFields.innerHTML += `
+                <div class="edit-field">
+                    <label>📏 Largeur</label>
+                    <input type="text" id="editWidth" value="${currentWidth}" placeholder="Ex: 100%, 500px, auto">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="applyWidth" ${currentWidth ? 'checked' : ''}>
+                        <label for="applyWidth">Modifier la largeur</label>
+                    </div>
+                </div>
+            `;
+        }
+
+        // SHOW INSERT MENU
+        function showInsertMenu(position) {
+            const menu = `
+                <div style="background: #ecf0f1; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                    <h4 style="margin-bottom: 10px;">Insérer ${position === 'before' ? 'avant' : 'après'} :</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                        <button class="btn" onclick="insertElement('h2', '${position}')">H2 Titre</button>
+                        <button class="btn" onclick="insertElement('h3', '${position}')">H3 Titre</button>
+                        <button class="btn" onclick="insertElement('p', '${position}')">📝 Paragraphe</button>
+                        <button class="btn" onclick="insertElement('image', '${position}')">🖼️ Image</button>
+                        <button class="btn" onclick="insertElement('link', '${position}')">🔗 Lien</button>
+                        <button class="btn" onclick="insertElement('button', '${position}')">🎯 Bouton</button>
+                        <button class="btn" onclick="insertElement('hr', '${position}')">➖ Ligne</button>
+                        <button class="btn" onclick="insertElement('spacer', '${position}')">⬜ Espace</button>
+                    </div>
+                </div>
+            `;
+
+            const insertActionsDiv = document.querySelector('.insert-actions');
+            if (insertActionsDiv) {
+                insertActionsDiv.insertAdjacentHTML('afterend', menu);
+            }
         }
 
         // DELETE ELEMENT
@@ -967,108 +1198,99 @@
             const type = currentElement.getAttribute('data-type');
 
             try {
-                if (type === 'text' || type === 'link') {
-                    const newText = document.getElementById('editText').value;
-                    if (newText !== currentElement.textContent) {
-                        currentElement.textContent = newText;
-                    }
+                // TEXT CONTENT
+                const editText = document.getElementById('editText');
+                if (editText && editText.value !== currentElement.textContent) {
+                    currentElement.textContent = editText.value;
+                }
 
-                    if (type === 'link') {
-                        const newHref = document.getElementById('editHref').value;
-                        if (newHref) currentElement.href = newHref;
-                    }
+                // LINK HREF
+                const editHref = document.getElementById('editHref');
+                if (editHref && editHref.value) {
+                    currentElement.href = editHref.value;
+                }
 
-                    // Font family
-                    if (document.getElementById('applyFont').checked) {
-                        currentElement.style.fontFamily = document.getElementById('editFontFamily').value;
-                    } else {
-                        currentElement.style.fontFamily = '';
-                    }
+                // IMAGE
+                const editImageSrc = document.getElementById('editImageSrc');
+                if (editImageSrc && editImageSrc.value) {
+                    currentElement.src = editImageSrc.value;
+                }
+                const editImageAlt = document.getElementById('editImageAlt');
+                if (editImageAlt) {
+                    currentElement.alt = editImageAlt.value;
+                }
 
-                    // Font size
-                    if (document.getElementById('applyFontSize').checked) {
-                        currentElement.style.fontSize = document.getElementById('editFontSize').value + 'px';
-                    } else {
-                        currentElement.style.fontSize = '';
-                    }
+                // FONT FAMILY
+                if (document.getElementById('applyFont') && document.getElementById('applyFont').checked) {
+                    currentElement.style.fontFamily = document.getElementById('editFontFamily').value;
+                } else if (document.getElementById('applyFont')) {
+                    currentElement.style.fontFamily = '';
+                }
 
-                    // Font weight
-                    if (document.getElementById('applyFontWeight').checked) {
-                        currentElement.style.fontWeight = document.getElementById('editFontWeight').value;
-                    } else {
-                        currentElement.style.fontWeight = '';
-                    }
+                // FONT SIZE
+                if (document.getElementById('applyFontSize') && document.getElementById('applyFontSize').checked) {
+                    currentElement.style.fontSize = document.getElementById('editFontSize').value + 'px';
+                } else if (document.getElementById('applyFontSize')) {
+                    currentElement.style.fontSize = '';
+                }
 
-                    // Text align
-                    if (document.getElementById('applyTextAlign').checked) {
-                        currentElement.style.textAlign = document.getElementById('editTextAlign').value;
-                    } else {
-                        currentElement.style.textAlign = '';
-                    }
+                // TEXT ALIGN
+                if (document.getElementById('applyTextAlign') && document.getElementById('applyTextAlign').checked) {
+                    currentElement.style.textAlign = document.getElementById('editTextAlign').value;
+                } else if (document.getElementById('applyTextAlign')) {
+                    currentElement.style.textAlign = '';
+                }
 
-                    // Color
-                    if (document.getElementById('applyColor').checked) {
-                        currentElement.style.color = document.getElementById('editColor').value;
-                    } else {
-                        currentElement.style.color = '';
-                    }
+                // COLOR
+                if (document.getElementById('applyColor') && document.getElementById('applyColor').checked) {
+                    currentElement.style.color = document.getElementById('editColor').value;
+                } else if (document.getElementById('applyColor')) {
+                    currentElement.style.color = '';
+                }
 
-                    // Background color
-                    if (document.getElementById('applyBgColor').checked) {
-                        currentElement.style.backgroundColor = document.getElementById('editBgColor').value;
-                    } else {
-                        currentElement.style.backgroundColor = '';
-                    }
+                // BACKGROUND COLOR
+                if (document.getElementById('applyBgColor') && document.getElementById('applyBgColor').checked) {
+                    currentElement.style.backgroundColor = document.getElementById('editBgColor').value;
+                } else if (document.getElementById('applyBgColor')) {
+                    currentElement.style.backgroundColor = '';
+                }
 
-                    // Padding
-                    if (document.getElementById('applyPadding').checked) {
-                        currentElement.style.paddingTop = document.getElementById('paddingTop').value + 'px';
-                        currentElement.style.paddingRight = document.getElementById('paddingRight').value + 'px';
-                        currentElement.style.paddingBottom = document.getElementById('paddingBottom').value + 'px';
-                        currentElement.style.paddingLeft = document.getElementById('paddingLeft').value + 'px';
-                    } else {
-                        currentElement.style.padding = '';
-                    }
+                // PADDING
+                if (document.getElementById('applyPadding') && document.getElementById('applyPadding').checked) {
+                    currentElement.style.paddingTop = document.getElementById('paddingTop').value + 'px';
+                    currentElement.style.paddingRight = document.getElementById('paddingRight').value + 'px';
+                    currentElement.style.paddingBottom = document.getElementById('paddingBottom').value + 'px';
+                    currentElement.style.paddingLeft = document.getElementById('paddingLeft').value + 'px';
+                } else if (document.getElementById('applyPadding')) {
+                    currentElement.style.padding = '';
+                }
 
-                    // Margin
-                    if (document.getElementById('applyMargin').checked) {
-                        currentElement.style.marginTop = document.getElementById('marginTop').value + 'px';
-                        currentElement.style.marginRight = document.getElementById('marginRight').value + 'px';
-                        currentElement.style.marginBottom = document.getElementById('marginBottom').value + 'px';
-                        currentElement.style.marginLeft = document.getElementById('marginLeft').value + 'px';
-                    } else {
-                        currentElement.style.margin = '';
-                    }
+                // MARGIN
+                if (document.getElementById('applyMargin') && document.getElementById('applyMargin').checked) {
+                    currentElement.style.marginTop = document.getElementById('marginTop').value + 'px';
+                    currentElement.style.marginRight = document.getElementById('marginRight').value + 'px';
+                    currentElement.style.marginBottom = document.getElementById('marginBottom').value + 'px';
+                    currentElement.style.marginLeft = document.getElementById('marginLeft').value + 'px';
+                } else if (document.getElementById('applyMargin')) {
+                    currentElement.style.margin = '';
+                }
 
-                    // Border
-                    if (document.getElementById('applyBorder').checked) {
-                        currentElement.style.borderWidth = document.getElementById('borderWidth').value + 'px';
-                        currentElement.style.borderColor = document.getElementById('borderColor').value;
-                        currentElement.style.borderStyle = 'solid';
-                        currentElement.style.borderRadius = document.getElementById('borderRadius').value + 'px';
-                    } else {
-                        currentElement.style.border = '';
-                        currentElement.style.borderRadius = '';
-                    }
+                // BORDER
+                if (document.getElementById('applyBorder') && document.getElementById('applyBorder').checked) {
+                    currentElement.style.borderWidth = document.getElementById('borderWidth').value + 'px';
+                    currentElement.style.borderColor = document.getElementById('borderColor').value;
+                    currentElement.style.borderStyle = 'solid';
+                    currentElement.style.borderRadius = document.getElementById('borderRadius').value + 'px';
+                } else if (document.getElementById('applyBorder')) {
+                    currentElement.style.border = '';
+                    currentElement.style.borderRadius = '';
+                }
 
-                } else if (type === 'image') {
-                    const newSrc = document.getElementById('editImageSrc').value;
-                    if (newSrc) currentElement.src = newSrc;
-
-                    const newAlt = document.getElementById('editImageAlt').value;
-                    currentElement.alt = newAlt;
-
-                    if (document.getElementById('applyImageWidth').checked) {
-                        currentElement.style.width = document.getElementById('editImageWidth').value;
-                    } else {
-                        currentElement.style.width = '';
-                    }
-
-                    if (document.getElementById('applyImageHeight').checked) {
-                        currentElement.style.height = document.getElementById('editImageHeight').value;
-                    } else {
-                        currentElement.style.height = '';
-                    }
+                // WIDTH
+                if (document.getElementById('applyWidth') && document.getElementById('applyWidth').checked) {
+                    currentElement.style.width = document.getElementById('editWidth').value;
+                } else if (document.getElementById('applyWidth')) {
+                    currentElement.style.width = '';
                 }
 
                 closeEditPanel();
@@ -1147,7 +1369,6 @@
         function saveToHistory() {
             const html = document.getElementById('preview').innerHTML;
 
-            // Remove future history if we're not at the end
             if (historyIndex < history.length - 1) {
                 history = history.slice(0, historyIndex + 1);
             }
@@ -1183,8 +1404,10 @@
         }
 
         function updateHistoryButtons() {
-            document.getElementById('undoBtn').disabled = historyIndex <= 0;
-            document.getElementById('redoBtn').disabled = historyIndex >= history.length - 1;
+            const undoBtn = document.getElementById('undoBtn');
+            const redoBtn = document.getElementById('redoBtn');
+            if (undoBtn) undoBtn.disabled = historyIndex <= 0;
+            if (redoBtn) redoBtn.disabled = historyIndex >= history.length - 1;
         }
 
         // ZOOM
@@ -1325,7 +1548,7 @@ ${html}
             const html = document.getElementById('preview').innerHTML;
             const size = (new Blob([html]).size / 1024).toFixed(2);
             const elements = document.getElementById('preview').querySelectorAll('[data-editable="true"]').length;
-            document.getElementById('stats').textContent = `Taille: ${size} KB | Éléments éditables: ${elements}`;
+            document.getElementById('stats').textContent = `Taille: ${size} KB | Éléments: ${elements}`;
         }
 
         // RESET VIEW
@@ -1334,7 +1557,7 @@ ${html}
                 document.getElementById('preview').innerHTML = `
                     <div style="padding: 60px 40px; text-align: center; color: #95a5a6;">
                         <h2 style="font-size: 32px; margin-bottom: 20px;">👋 Bienvenue</h2>
-                        <p style="margin-top: 10px; font-size: 16px;">Collez votre HTML dans la barre latérale</p>
+                        <p style="margin-top: 10px; font-size: 16px;">Collez votre HTML ou ajoutez des blocs</p>
                     </div>
                 `;
                 document.getElementById('htmlInput').value = '';
@@ -1349,7 +1572,7 @@ ${html}
 
         // ENABLE EDIT MODE
         function enableEditMode() {
-            showToast('✏️ Mode édition - Cliquez sur n\'importe quel élément');
+            showToast('✏️ Mode édition - Tous les éléments sont cliquables !');
         }
 
         // SHOW TOAST
