@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Éditeur Visuel de Newsletter - HorsePrint Pro</title>
+    <title>Éditeur Visuel de Newsletter Pro - HorsePrint</title>
     <style>
         * {
             margin: 0;
@@ -68,6 +68,7 @@
 
         .btn:hover {
             background: #2980b9;
+            transform: translateY(-1px);
         }
 
         .btn-success {
@@ -129,6 +130,17 @@
             margin-bottom: 5px;
             font-size: 13px;
             color: #bdc3c7;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
         }
 
         /* NEWSLETTERS LIST */
@@ -222,18 +234,17 @@
         [data-editable="true"] {
             outline: 2px dashed transparent;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: outline 0.2s;
             position: relative;
         }
 
         [data-editable="true"]:hover {
             outline: 2px dashed #3498db;
-            background: rgba(52, 152, 219, 0.05);
         }
 
         [data-editable="true"].selected {
             outline: 3px solid #3498db;
-            background: rgba(52, 152, 219, 0.1);
+            outline-offset: 2px;
         }
 
         /* EDIT PANEL */
@@ -246,8 +257,10 @@
             padding: 25px;
             border-radius: 10px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            min-width: 400px;
+            min-width: 450px;
             max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
             z-index: 1000;
             display: none;
         }
@@ -261,6 +274,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
         }
 
         .edit-panel-title {
@@ -288,7 +303,10 @@
         .edit-field label {
             color: #2c3e50;
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .edit-field input,
@@ -300,6 +318,20 @@
 
         .edit-field textarea {
             min-height: 80px;
+        }
+
+        .edit-field input:focus,
+        .edit-field textarea:focus {
+            outline: 2px solid #3498db;
+            border-color: #3498db;
+        }
+
+        .style-preview {
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
         }
 
         .overlay {
@@ -336,6 +368,14 @@
             display: block;
         }
 
+        .toast.warning {
+            background: #f39c12;
+        }
+
+        .toast.error {
+            background: #e74c3c;
+        }
+
         @keyframes slideIn {
             from {
                 transform: translateX(400px);
@@ -345,6 +385,12 @@
                 transform: translateX(0);
                 opacity: 1;
             }
+        }
+
+        .help-text {
+            font-size: 11px;
+            color: #95a5a6;
+            margin-top: 5px;
         }
 
         /* RESPONSIVE */
@@ -369,7 +415,7 @@
     <div class="app">
         <!-- SIDEBAR -->
         <div class="sidebar">
-            <div class="logo">📧 Newsletter Editor</div>
+            <div class="logo">✨ Newsletter Editor Pro</div>
 
             <!-- IMPORT HTML -->
             <div class="section">
@@ -380,18 +426,17 @@
 
             <!-- QUICK EDIT TOOLS -->
             <div class="section">
-                <div class="section-title">2. Édition rapide</div>
+                <div class="section-title">2. Rechercher & Remplacer</div>
 
-                <label>Couleur primaire</label>
-                <input type="color" id="primaryColor" value="#0D4AFF" onchange="changePrimaryColor(this.value)">
-
-                <label>Couleur secondaire</label>
-                <input type="color" id="secondaryColor" value="#ffffff" onchange="changeSecondaryColor(this.value)">
-
-                <label>Rechercher & remplacer</label>
+                <label>Rechercher</label>
                 <input type="text" id="searchText" placeholder="Texte à chercher">
+
+                <label>Remplacer par</label>
                 <input type="text" id="replaceText" placeholder="Remplacer par">
-                <button class="btn" onclick="findAndReplace()">🔄 Remplacer</button>
+
+                <button class="btn" onclick="findAndReplace()">🔄 Tout remplacer</button>
+
+                <div class="help-text">💡 Utile pour changer emails, URLs, noms...</div>
             </div>
 
             <!-- NEWSLETTERS MANAGEMENT -->
@@ -416,14 +461,16 @@
                 <button class="toolbar-btn" onclick="enableEditMode()">✏️ Mode édition</button>
                 <button class="toolbar-btn" onclick="resetView()">🔄 Réinitialiser</button>
                 <span style="flex: 1;"></span>
-                <span id="status" style="color: #95a5a6; font-size: 13px;">Cliquez sur un élément pour l'éditer</span>
+                <span id="status" style="color: #95a5a6; font-size: 13px;">👆 Cliquez sur un élément pour l'éditer</span>
             </div>
 
             <div class="preview-container">
                 <div class="preview" id="preview">
                     <div style="padding: 40px; text-align: center; color: #95a5a6;">
-                        <h2>👆 Collez votre HTML dans la barre latérale</h2>
-                        <p style="margin-top: 10px;">Puis cliquez sur "Charger le HTML"</p>
+                        <h2>👋 Bienvenue dans l'éditeur</h2>
+                        <p style="margin-top: 10px;">1. Collez votre HTML dans la barre latérale</p>
+                        <p style="margin-top: 5px;">2. Cliquez sur "Charger le HTML"</p>
+                        <p style="margin-top: 5px;">3. Cliquez sur n'importe quel élément pour l'éditer</p>
                     </div>
                 </div>
             </div>
@@ -434,11 +481,12 @@
     <div class="overlay" id="overlay" onclick="closeEditPanel()"></div>
     <div class="edit-panel" id="editPanel">
         <div class="edit-panel-header">
-            <div class="edit-panel-title">Éditer l'élément</div>
+            <div class="edit-panel-title">✏️ Éditer l'élément</div>
             <button class="close-panel" onclick="closeEditPanel()">×</button>
         </div>
         <div id="editFields"></div>
-        <button class="btn btn-success" onclick="saveEdit()">✅ Enregistrer</button>
+        <button class="btn btn-success" onclick="saveEdit()">✅ Appliquer les changements</button>
+        <button class="btn btn-secondary" onclick="closeEditPanel()" style="margin-top: 10px;">❌ Annuler</button>
     </div>
 
     <!-- TOAST NOTIFICATION -->
@@ -446,6 +494,7 @@
 
     <script>
         let currentElement = null;
+        let originalStyles = {};
         let newsletters = JSON.parse(localStorage.getItem('newsletters') || '{}');
         let currentNewsletterId = null;
 
@@ -470,7 +519,9 @@
             // Textes éditables
             const textElements = preview.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span, div, a, button, td, th, li');
             textElements.forEach(el => {
-                if (el.children.length === 0 || el.textContent.trim().length > 0) {
+                // Seulement si l'élément a du texte direct ou peu d'enfants
+                const hasDirectText = Array.from(el.childNodes).some(node => node.nodeType === 3 && node.textContent.trim());
+                if (hasDirectText || (el.children.length === 0 && el.textContent.trim())) {
                     el.setAttribute('data-editable', 'true');
                     el.setAttribute('data-type', 'text');
                     el.onclick = (e) => {
@@ -499,6 +550,11 @@
             });
         }
 
+        // GET ACTUAL STYLE VALUE (not computed)
+        function getActualStyle(element, property) {
+            return element.style[property] || '';
+        }
+
         // EDIT ELEMENT
         function editElement(element) {
             // Remove previous selection
@@ -506,6 +562,15 @@
             element.classList.add('selected');
 
             currentElement = element;
+            originalStyles = {
+                textContent: element.textContent,
+                innerHTML: element.innerHTML,
+                style: element.getAttribute('style') || '',
+                href: element.href || '',
+                src: element.src || '',
+                alt: element.alt || ''
+            };
+
             const type = element.getAttribute('data-type');
             const editFields = document.getElementById('editFields');
             editFields.innerHTML = '';
@@ -514,8 +579,9 @@
                 // Text content
                 editFields.innerHTML += `
                     <div class="edit-field">
-                        <label>Texte</label>
+                        <label>📝 Texte</label>
                         <textarea id="editText">${element.textContent}</textarea>
+                        <div class="help-text">Modifiez le texte visible</div>
                     </div>
                 `;
 
@@ -523,60 +589,87 @@
                 if (type === 'link') {
                     editFields.innerHTML += `
                         <div class="edit-field">
-                            <label>Lien (URL)</label>
+                            <label>🔗 URL du lien</label>
                             <input type="text" id="editHref" value="${element.href || ''}">
+                            <div class="help-text">Adresse de destination du lien</div>
                         </div>
                     `;
                 }
 
-                // Color
-                const color = window.getComputedStyle(element).color;
+                // Color (only if has inline color)
+                const currentColor = getActualStyle(element, 'color');
                 editFields.innerHTML += `
                     <div class="edit-field">
-                        <label>Couleur du texte</label>
-                        <input type="color" id="editColor" value="${rgbToHex(color)}">
+                        <label>🎨 Couleur du texte <span class="help-text">(optionnel)</span></label>
+                        <input type="color" id="editColor" value="${currentColor || '#000000'}">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyColor" ${currentColor ? 'checked' : ''}>
+                            <label for="applyColor">Appliquer une couleur personnalisée</label>
+                        </div>
                     </div>
                 `;
 
-                // Background
-                const bgColor = window.getComputedStyle(element).backgroundColor;
+                // Background (only if has inline bg)
+                const currentBg = getActualStyle(element, 'backgroundColor');
                 editFields.innerHTML += `
                     <div class="edit-field">
-                        <label>Couleur de fond</label>
-                        <input type="color" id="editBgColor" value="${rgbToHex(bgColor)}">
+                        <label>🖌️ Couleur de fond <span class="help-text">(optionnel)</span></label>
+                        <input type="color" id="editBgColor" value="${currentBg || '#ffffff'}">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyBgColor" ${currentBg ? 'checked' : ''}>
+                            <label for="applyBgColor">Appliquer une couleur de fond</label>
+                        </div>
                     </div>
                 `;
 
-                // Font size
-                const fontSize = parseInt(window.getComputedStyle(element).fontSize);
+                // Font size (only if has inline)
+                const currentFontSize = getActualStyle(element, 'fontSize');
+                const fontSize = parseInt(currentFontSize) || 16;
                 editFields.innerHTML += `
                     <div class="edit-field">
-                        <label>Taille de police (px)</label>
+                        <label>📏 Taille de police (px) <span class="help-text">(optionnel)</span></label>
                         <input type="number" id="editFontSize" value="${fontSize}" min="8" max="72">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyFontSize" ${currentFontSize ? 'checked' : ''}>
+                            <label for="applyFontSize">Modifier la taille</label>
+                        </div>
                     </div>
                 `;
 
-                // Padding
-                const padding = parseInt(window.getComputedStyle(element).padding);
+                // Padding (only if has inline)
+                const currentPadding = getActualStyle(element, 'padding');
+                const padding = parseInt(currentPadding) || 0;
                 editFields.innerHTML += `
                     <div class="edit-field">
-                        <label>Espacement interne (px)</label>
-                        <input type="number" id="editPadding" value="${padding || 0}" min="0" max="100">
+                        <label>📐 Espacement interne (px) <span class="help-text">(optionnel)</span></label>
+                        <input type="number" id="editPadding" value="${padding}" min="0" max="100">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyPadding" ${currentPadding ? 'checked' : ''}>
+                            <label for="applyPadding">Modifier l'espacement</label>
+                        </div>
                     </div>
                 `;
+
             } else if (type === 'image') {
                 editFields.innerHTML += `
                     <div class="edit-field">
-                        <label>URL de l'image</label>
+                        <label>🖼️ URL de l'image</label>
                         <input type="text" id="editImageSrc" value="${element.src}">
+                        <div class="help-text">Collez l'URL complète de la nouvelle image</div>
                     </div>
                     <div class="edit-field">
-                        <label>Texte alternatif</label>
+                        <label>📝 Texte alternatif</label>
                         <input type="text" id="editImageAlt" value="${element.alt || ''}">
+                        <div class="help-text">Description pour l'accessibilité</div>
                     </div>
                     <div class="edit-field">
-                        <label>Largeur (px ou %)</label>
-                        <input type="text" id="editImageWidth" value="${element.style.width || '100%'}">
+                        <label>📏 Largeur <span class="help-text">(optionnel)</span></label>
+                        <input type="text" id="editImageWidth" value="${element.style.width || ''}">
+                        <div class="help-text">Ex: 100%, 500px, auto</div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="applyImageWidth" ${element.style.width ? 'checked' : ''}>
+                            <label for="applyImageWidth">Modifier la largeur</label>
+                        </div>
                     </div>
                 `;
             }
@@ -585,46 +678,86 @@
             document.getElementById('editPanel').classList.add('active');
         }
 
-        // SAVE EDIT
+        // SAVE EDIT - ONLY APPLY CHANGES
         function saveEdit() {
             if (!currentElement) return;
 
             const type = currentElement.getAttribute('data-type');
 
-            if (type === 'text' || type === 'link') {
-                const newText = document.getElementById('editText').value;
-                currentElement.textContent = newText;
+            try {
+                if (type === 'text' || type === 'link') {
+                    const newText = document.getElementById('editText').value;
 
-                if (type === 'link') {
-                    const newHref = document.getElementById('editHref').value;
-                    currentElement.href = newHref;
+                    // Only change text if different
+                    if (newText !== currentElement.textContent) {
+                        currentElement.textContent = newText;
+                    }
+
+                    // Only apply color if checkbox is checked
+                    if (document.getElementById('applyColor').checked) {
+                        const newColor = document.getElementById('editColor').value;
+                        currentElement.style.color = newColor;
+                    } else {
+                        currentElement.style.color = '';
+                    }
+
+                    // Only apply bg color if checkbox is checked
+                    if (document.getElementById('applyBgColor').checked) {
+                        const newBgColor = document.getElementById('editBgColor').value;
+                        currentElement.style.backgroundColor = newBgColor;
+                    } else {
+                        currentElement.style.backgroundColor = '';
+                    }
+
+                    // Only apply font size if checkbox is checked
+                    if (document.getElementById('applyFontSize').checked) {
+                        const newFontSize = document.getElementById('editFontSize').value;
+                        currentElement.style.fontSize = newFontSize + 'px';
+                    } else {
+                        currentElement.style.fontSize = '';
+                    }
+
+                    // Only apply padding if checkbox is checked
+                    if (document.getElementById('applyPadding').checked) {
+                        const newPadding = document.getElementById('editPadding').value;
+                        currentElement.style.padding = newPadding + 'px';
+                    } else {
+                        currentElement.style.padding = '';
+                    }
+
+                    // Link href
+                    if (type === 'link') {
+                        const newHref = document.getElementById('editHref').value;
+                        if (newHref !== currentElement.href) {
+                            currentElement.href = newHref;
+                        }
+                    }
+
+                } else if (type === 'image') {
+                    const newSrc = document.getElementById('editImageSrc').value;
+                    if (newSrc !== currentElement.src) {
+                        currentElement.src = newSrc;
+                    }
+
+                    const newAlt = document.getElementById('editImageAlt').value;
+                    if (newAlt !== currentElement.alt) {
+                        currentElement.alt = newAlt;
+                    }
+
+                    if (document.getElementById('applyImageWidth').checked) {
+                        const newWidth = document.getElementById('editImageWidth').value;
+                        currentElement.style.width = newWidth;
+                    } else {
+                        currentElement.style.width = '';
+                    }
                 }
 
-                const newColor = document.getElementById('editColor').value;
-                currentElement.style.color = newColor;
-
-                const newBgColor = document.getElementById('editBgColor').value;
-                currentElement.style.backgroundColor = newBgColor;
-
-                const newFontSize = document.getElementById('editFontSize').value;
-                currentElement.style.fontSize = newFontSize + 'px';
-
-                const newPadding = document.getElementById('editPadding').value;
-                currentElement.style.padding = newPadding + 'px';
-
-            } else if (type === 'image') {
-                const newSrc = document.getElementById('editImageSrc').value;
-                currentElement.src = newSrc;
-
-                const newAlt = document.getElementById('editImageAlt').value;
-                currentElement.alt = newAlt;
-
-                const newWidth = document.getElementById('editImageWidth').value;
-                currentElement.style.width = newWidth;
+                closeEditPanel();
+                showToast('✅ Modifications appliquées !');
+            } catch (error) {
+                showToast('❌ Erreur: ' + error.message, 'error');
+                console.error(error);
             }
-
-            closeEditPanel();
-            showToast('✅ Modifications enregistrées !');
         }
 
         // CLOSE EDIT PANEL
@@ -635,36 +768,6 @@
                 currentElement.classList.remove('selected');
             }
             currentElement = null;
-        }
-
-        // CHANGE PRIMARY COLOR
-        function changePrimaryColor(color) {
-            const preview = document.getElementById('preview');
-            const elements = preview.querySelectorAll('[style*="color"], [style*="background"]');
-
-            elements.forEach(el => {
-                const style = el.style.cssText;
-                if (style.includes('#0D4AFF') || style.includes('rgb(13, 74, 255)')) {
-                    el.style.cssText = style.replace(/#0D4AFF/gi, color).replace(/rgb\(13,\s*74,\s*255\)/gi, color);
-                }
-            });
-
-            showToast('🎨 Couleur primaire changée !');
-        }
-
-        // CHANGE SECONDARY COLOR
-        function changeSecondaryColor(color) {
-            const preview = document.getElementById('preview');
-            const elements = preview.querySelectorAll('[style*="background"]');
-
-            elements.forEach(el => {
-                const bgColor = window.getComputedStyle(el).backgroundColor;
-                if (bgColor === 'rgb(255, 255, 255)' || bgColor === 'rgba(255, 255, 255, 1)') {
-                    el.style.backgroundColor = color;
-                }
-            });
-
-            showToast('🎨 Couleur secondaire changée !');
         }
 
         // FIND AND REPLACE
@@ -687,7 +790,17 @@
                         node.textContent = newText;
                         count++;
                     }
-                } else {
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    // Also replace in href attributes
+                    if (node.href && node.href.includes(search)) {
+                        node.href = node.href.replace(new RegExp(search, 'gi'), replace);
+                        count++;
+                    }
+                    // Replace in src attributes
+                    if (node.src && node.src.includes(search)) {
+                        node.src = node.src.replace(new RegExp(search, 'gi'), replace);
+                        count++;
+                    }
                     node.childNodes.forEach(replaceInNode);
                 }
             }
@@ -780,7 +893,17 @@
         // DOWNLOAD HTML
         function downloadHTML() {
             const html = document.getElementById('preview').innerHTML;
-            const blob = new Blob([html], { type: 'text/html' });
+            const fullHTML = `<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+${html}
+</body>
+</html>`;
+            const blob = new Blob([fullHTML], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -792,7 +915,7 @@
         // RESET VIEW
         function resetView() {
             if (confirm('Réinitialiser la vue ? (Les modifications non sauvegardées seront perdues)')) {
-                document.getElementById('preview').innerHTML = '<div style="padding: 40px; text-align: center; color: #95a5a6;"><h2>👆 Collez votre HTML dans la barre latérale</h2></div>';
+                document.getElementById('preview').innerHTML = '<div style="padding: 40px; text-align: center; color: #95a5a6;"><h2>👋 Bienvenue</h2><p style="margin-top: 10px;">Collez votre HTML dans la barre latérale</p></div>';
                 document.getElementById('htmlInput').value = '';
                 currentNewsletterId = null;
                 loadNewslettersList();
@@ -808,23 +931,14 @@
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             toast.textContent = message;
-            toast.style.background = type === 'warning' ? '#f39c12' : '#27ae60';
-            toast.classList.add('active');
+            toast.className = 'toast active';
+            if (type) {
+                toast.classList.add(type);
+            }
 
             setTimeout(() => {
                 toast.classList.remove('active');
             }, 3000);
-        }
-
-        // RGB TO HEX
-        function rgbToHex(rgb) {
-            if (!rgb || rgb === 'rgba(0, 0, 0, 0)') return '#ffffff';
-            const matches = rgb.match(/\d+/g);
-            if (!matches) return '#000000';
-            return '#' + matches.slice(0, 3).map(x => {
-                const hex = parseInt(x).toString(16);
-                return hex.length === 1 ? '0' + hex : hex;
-            }).join('');
         }
 
         // INIT
