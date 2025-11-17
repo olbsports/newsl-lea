@@ -534,6 +534,34 @@
             font-weight: normal;
         }
 
+        .notice-box {
+            background: #e8f4fd;
+            border-left: 4px solid #3498db;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #2c3e50;
+            line-height: 1.5;
+        }
+
+        .notice-box strong {
+            color: #3498db;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #f39c12;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #856404;
+            line-height: 1.5;
+        }
+
         .stats {
             background: #34495e;
             padding: 8px;
@@ -551,6 +579,16 @@
             border-radius: 3px;
             font-size: 10px;
             margin-left: 8px;
+        }
+
+        .info-badge {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            margin-left: 5px;
         }
 
         /* RESPONSIVE */
@@ -585,11 +623,13 @@
                 <div class="section-title">📥 1. Importer HTML</div>
                 <textarea id="htmlInput" placeholder="Collez votre code HTML ici..."></textarea>
                 <button class="btn btn-success" onclick="loadHTML()">Charger le HTML</button>
+                <div class="help-text">💡 Collez le code HTML de votre newsletter existante</div>
             </div>
 
             <!-- ADD BLOCKS -->
             <div class="section">
                 <div class="section-title">➕ 2. Ajouter des blocs</div>
+                <div class="help-text" style="margin-bottom: 10px;">💡 Cliquez pour ajouter un bloc à la fin</div>
                 <div class="blocks-grid">
                     <div class="block-item" onclick="insertBlock('image-text-left')">
                         <div class="block-item-title">🖼️ Image + Texte (gauche)</div>
@@ -637,6 +677,7 @@
                 <input type="text" id="replaceText" placeholder="Remplacer par">
 
                 <button class="btn" onclick="findAndReplace()">🔄 Tout remplacer</button>
+                <div class="help-text">💡 Remplace un texte/URL partout dans la newsletter</div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px;">
                     <button class="btn btn-warning" onclick="undoAction()">↶ Annuler</button>
@@ -649,6 +690,7 @@
                 <div class="section-title">💾 4. Mes newsletters</div>
                 <input type="text" id="newsletterName" placeholder="Nom de la newsletter">
                 <button class="btn btn-success" onclick="saveNewsletter()">Sauvegarder</button>
+                <div class="help-text">💡 Sauvegarde dans le navigateur (localStorage)</div>
                 <div class="newsletters-list" id="newslettersList"></div>
             </div>
 
@@ -689,7 +731,7 @@
                         <p style="margin-top: 10px; font-size: 16px;">1️⃣ Collez votre HTML dans la barre latérale</p>
                         <p style="margin-top: 8px; font-size: 16px;">2️⃣ Ou ajoutez des blocs préconfigurés</p>
                         <p style="margin-top: 8px; font-size: 16px;">3️⃣ Cliquez sur n'importe quel élément pour l'éditer</p>
-                        <p style="margin-top: 20px; font-size: 14px; color: #bdc3c7;">✨ Tous les éléments sont maintenant cliquables !</p>
+                        <p style="margin-top: 20px; font-size: 14px; color: #bdc3c7;">✨ Tous les éléments sont cliquables - Les styles sont modifiés SANS toucher au contenu !</p>
                     </div>
                 </div>
             </div>
@@ -900,11 +942,26 @@
 
             // ELEMENT INFO
             const tagName = element.tagName.toLowerCase();
+            const hasChildren = element.children.length > 0;
+
             editFields.innerHTML += `
                 <div style="background: #f8f9fa; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
                     <strong>Élément :</strong> <span class="element-type-badge">&lt;${tagName}&gt;</span>
+                    ${hasChildren ? '<span class="info-badge">Conteneur</span>' : '<span class="info-badge">Texte</span>'}
                 </div>
             `;
+
+            // WARNING FOR COMPLEX ELEMENTS
+            if (hasChildren) {
+                editFields.innerHTML += `
+                    <div class="warning-box">
+                        <strong>⚠️ Attention :</strong>
+                        Cet élément contient d'autres éléments (${element.children.length} enfant${element.children.length > 1 ? 's' : ''}).
+                        Pour éviter de supprimer du contenu, cliquez sur les éléments enfants pour modifier leur texte directement.
+                        Ici, vous pouvez modifier uniquement les <strong>styles visuels</strong> (couleurs, espacements, bordures).
+                    </div>
+                `;
+            }
 
             // INSERT BEFORE/AFTER BUTTONS
             editFields.innerHTML += `
@@ -912,6 +969,7 @@
                     <button class="btn btn-purple" onclick="showInsertMenu('before')">➕ Insérer avant</button>
                     <button class="btn btn-purple" onclick="showInsertMenu('after')">➕ Insérer après</button>
                 </div>
+                <div class="help-text" style="margin-bottom: 15px;">💡 Ajoutez un nouvel élément juste avant ou après celui-ci</div>
             `;
 
             // DELETE BUTTON
@@ -921,12 +979,13 @@
                 </button>
             `;
 
-            // TEXT CONTENT (for all elements with text)
-            if (element.textContent && element.textContent.trim()) {
+            // TEXT CONTENT - ONLY FOR LEAF ELEMENTS (no children)
+            if (!hasChildren && element.textContent && element.textContent.trim()) {
                 editFields.innerHTML += `
                     <div class="edit-field">
                         <label>📝 Contenu texte</label>
                         <textarea id="editText">${element.textContent}</textarea>
+                        <div class="help-text">Modifiez le texte visible dans cet élément</div>
                     </div>
                 `;
             }
@@ -937,6 +996,7 @@
                     <div class="edit-field">
                         <label>🔗 URL du lien</label>
                         <input type="text" id="editHref" value="${element.href || ''}">
+                        <div class="help-text">Adresse de destination quand on clique sur le lien</div>
                     </div>
                 `;
             }
@@ -947,13 +1007,23 @@
                     <div class="edit-field">
                         <label>🖼️ URL de l'image</label>
                         <input type="text" id="editImageSrc" value="${element.src || ''}">
+                        <div class="help-text">Lien complet vers l'image (https://...)</div>
                     </div>
                     <div class="edit-field">
                         <label>📝 Texte alternatif</label>
                         <input type="text" id="editImageAlt" value="${element.alt || ''}">
+                        <div class="help-text">Description pour l'accessibilité et le SEO</div>
                     </div>
                 `;
             }
+
+            // NOTICE FOR STYLES
+            editFields.innerHTML += `
+                <div class="notice-box">
+                    <strong>💡 Styles visuels :</strong>
+                    Cochez les options que vous souhaitez modifier. Les options non cochées garderont leur style actuel.
+                </div>
+            `;
 
             // STYLES FOR ALL ELEMENTS
             addStyleControls(editFields, element);
@@ -961,7 +1031,7 @@
             // SAVE AND CANCEL BUTTONS
             editFields.innerHTML += `
                 <div class="panel-actions">
-                    <button class="btn btn-success" onclick="saveEdit()">✅ Appliquer</button>
+                    <button class="btn btn-success" onclick="saveEdit()">✅ Appliquer les changements</button>
                     <button class="btn btn-secondary" onclick="closeEditPanel()">❌ Annuler</button>
                 </div>
             `;
@@ -986,8 +1056,9 @@
                     </select>
                     <div class="checkbox-group">
                         <input type="checkbox" id="applyFont" ${currentFont ? 'checked' : ''}>
-                        <label for="applyFont">Appliquer la police</label>
+                        <label for="applyFont">Appliquer cette police</label>
                     </div>
+                    <div class="help-text">Change la police de caractères du texte</div>
                 </div>
             `;
 
@@ -1008,6 +1079,7 @@
                         <input type="checkbox" id="applyFontSize" ${currentFontSize ? 'checked' : ''}>
                         <label for="applyFontSize">Modifier la taille</label>
                     </div>
+                    <div class="help-text">Ajuste la taille du texte en pixels</div>
                 </div>
             `;
 
@@ -1026,6 +1098,7 @@
                         <input type="checkbox" id="applyTextAlign" ${currentAlign ? 'checked' : ''}>
                         <label for="applyTextAlign">Appliquer l'alignement</label>
                     </div>
+                    <div class="help-text">Position horizontale du texte dans l'élément</div>
                 </div>
             `;
 
@@ -1040,6 +1113,7 @@
                         <input type="checkbox" id="applyColor" ${currentColor ? 'checked' : ''}>
                         <label for="applyColor">Appliquer la couleur</label>
                     </div>
+                    <div class="help-text">Couleur du texte affiché</div>
                 </div>
             `;
 
@@ -1054,6 +1128,7 @@
                         <input type="checkbox" id="applyBgColor" ${currentBg ? 'checked' : ''}>
                         <label for="applyBgColor">Appliquer la couleur de fond</label>
                     </div>
+                    <div class="help-text">Couleur de l'arrière-plan de l'élément (cards, sections, etc.)</div>
                 </div>
             `;
 
@@ -1083,6 +1158,7 @@
                         <input type="checkbox" id="applyPadding" ${getActualStyle(element, 'padding') ? 'checked' : ''}>
                         <label for="applyPadding">Modifier le padding</label>
                     </div>
+                    <div class="help-text">Espace entre le contenu et les bords de l'élément</div>
                 </div>
             `;
 
@@ -1112,6 +1188,7 @@
                         <input type="checkbox" id="applyMargin" ${getActualStyle(element, 'margin') ? 'checked' : ''}>
                         <label for="applyMargin">Modifier le margin</label>
                     </div>
+                    <div class="help-text">Espace autour de l'élément (distance avec les autres éléments)</div>
                 </div>
             `;
 
@@ -1138,6 +1215,7 @@
                         <input type="checkbox" id="applyBorder" ${getActualStyle(element, 'border') ? 'checked' : ''}>
                         <label for="applyBorder">Appliquer la bordure</label>
                     </div>
+                    <div class="help-text">Contour visible autour de l'élément avec coins arrondis</div>
                 </div>
             `;
 
@@ -1151,6 +1229,7 @@
                         <input type="checkbox" id="applyWidth" ${currentWidth ? 'checked' : ''}>
                         <label for="applyWidth">Modifier la largeur</label>
                     </div>
+                    <div class="help-text">Largeur de l'élément (% du parent, pixels fixes, ou auto)</div>
                 </div>
             `;
         }
@@ -1190,18 +1269,20 @@
             }
         }
 
-        // SAVE EDIT
+        // SAVE EDIT - STYLES ONLY, DON'T TOUCH CONTENT
         function saveEdit() {
             if (!currentElement) return;
 
             saveToHistory();
-            const type = currentElement.getAttribute('data-type');
+            const hasChildren = currentElement.children.length > 0;
 
             try {
-                // TEXT CONTENT
-                const editText = document.getElementById('editText');
-                if (editText && editText.value !== currentElement.textContent) {
-                    currentElement.textContent = editText.value;
+                // TEXT CONTENT - ONLY FOR LEAF ELEMENTS
+                if (!hasChildren) {
+                    const editText = document.getElementById('editText');
+                    if (editText && editText.value !== currentElement.textContent) {
+                        currentElement.textContent = editText.value;
+                    }
                 }
 
                 // LINK HREF
@@ -1295,7 +1376,7 @@
 
                 closeEditPanel();
                 updateStats();
-                showToast('✅ Modifications appliquées !');
+                showToast('✅ Styles modifiés avec succès ! Aucun contenu supprimé.');
             } catch (error) {
                 showToast('❌ Erreur: ' + error.message, 'error');
                 console.error(error);
