@@ -925,9 +925,15 @@
             });
         }
 
-        // GET ACTUAL STYLE VALUE
+        // GET ACTUAL STYLE VALUE - including computed styles and !important
         function getActualStyle(element, property) {
-            return element.style[property] || '';
+            // First try inline style
+            const inlineStyle = element.style[property];
+            if (inlineStyle) return inlineStyle;
+
+            // Then try computed style
+            const computedStyle = window.getComputedStyle(element);
+            return computedStyle[property] || '';
         }
 
         // EDIT ELEMENT
@@ -1022,6 +1028,9 @@
                 <div class="notice-box">
                     <strong>💡 Styles visuels :</strong>
                     Cochez les options que vous souhaitez modifier. Les options non cochées garderont leur style actuel.
+                    <br><br>
+                    <strong>⚡ Force !important :</strong>
+                    Tous les styles modifiés utiliseront !important pour écraser les styles existants (même ceux avec !important comme <code>#1F2937 !important</code>).
                 </div>
             `;
 
@@ -1301,82 +1310,105 @@
                     currentElement.alt = editImageAlt.value;
                 }
 
-                // FONT FAMILY
+                // FONT FAMILY - Use setProperty with !important to override existing !important styles
                 if (document.getElementById('applyFont') && document.getElementById('applyFont').checked) {
-                    currentElement.style.fontFamily = document.getElementById('editFontFamily').value;
+                    const fontValue = document.getElementById('editFontFamily').value;
+                    if (fontValue) {
+                        currentElement.style.setProperty('font-family', fontValue, 'important');
+                    }
                 } else if (document.getElementById('applyFont')) {
-                    currentElement.style.fontFamily = '';
+                    currentElement.style.removeProperty('font-family');
                 }
 
                 // FONT SIZE
                 if (document.getElementById('applyFontSize') && document.getElementById('applyFontSize').checked) {
-                    currentElement.style.fontSize = document.getElementById('editFontSize').value + 'px';
+                    const sizeValue = document.getElementById('editFontSize').value + 'px';
+                    currentElement.style.setProperty('font-size', sizeValue, 'important');
                 } else if (document.getElementById('applyFontSize')) {
-                    currentElement.style.fontSize = '';
+                    currentElement.style.removeProperty('font-size');
                 }
 
                 // TEXT ALIGN
                 if (document.getElementById('applyTextAlign') && document.getElementById('applyTextAlign').checked) {
-                    currentElement.style.textAlign = document.getElementById('editTextAlign').value;
+                    const alignValue = document.getElementById('editTextAlign').value;
+                    if (alignValue) {
+                        currentElement.style.setProperty('text-align', alignValue, 'important');
+                    }
                 } else if (document.getElementById('applyTextAlign')) {
-                    currentElement.style.textAlign = '';
+                    currentElement.style.removeProperty('text-align');
                 }
 
                 // COLOR
                 if (document.getElementById('applyColor') && document.getElementById('applyColor').checked) {
-                    currentElement.style.color = document.getElementById('editColor').value;
+                    const colorValue = document.getElementById('editColor').value;
+                    currentElement.style.setProperty('color', colorValue, 'important');
                 } else if (document.getElementById('applyColor')) {
-                    currentElement.style.color = '';
+                    currentElement.style.removeProperty('color');
                 }
 
-                // BACKGROUND COLOR
+                // BACKGROUND COLOR - Use setProperty with !important to override existing !important styles
                 if (document.getElementById('applyBgColor') && document.getElementById('applyBgColor').checked) {
-                    currentElement.style.backgroundColor = document.getElementById('editBgColor').value;
+                    const bgColorValue = document.getElementById('editBgColor').value;
+                    currentElement.style.setProperty('background-color', bgColorValue, 'important');
                 } else if (document.getElementById('applyBgColor')) {
-                    currentElement.style.backgroundColor = '';
+                    currentElement.style.removeProperty('background-color');
                 }
 
                 // PADDING
                 if (document.getElementById('applyPadding') && document.getElementById('applyPadding').checked) {
-                    currentElement.style.paddingTop = document.getElementById('paddingTop').value + 'px';
-                    currentElement.style.paddingRight = document.getElementById('paddingRight').value + 'px';
-                    currentElement.style.paddingBottom = document.getElementById('paddingBottom').value + 'px';
-                    currentElement.style.paddingLeft = document.getElementById('paddingLeft').value + 'px';
+                    currentElement.style.setProperty('padding-top', document.getElementById('paddingTop').value + 'px', 'important');
+                    currentElement.style.setProperty('padding-right', document.getElementById('paddingRight').value + 'px', 'important');
+                    currentElement.style.setProperty('padding-bottom', document.getElementById('paddingBottom').value + 'px', 'important');
+                    currentElement.style.setProperty('padding-left', document.getElementById('paddingLeft').value + 'px', 'important');
                 } else if (document.getElementById('applyPadding')) {
-                    currentElement.style.padding = '';
+                    currentElement.style.removeProperty('padding-top');
+                    currentElement.style.removeProperty('padding-right');
+                    currentElement.style.removeProperty('padding-bottom');
+                    currentElement.style.removeProperty('padding-left');
+                    currentElement.style.removeProperty('padding');
                 }
 
                 // MARGIN
                 if (document.getElementById('applyMargin') && document.getElementById('applyMargin').checked) {
-                    currentElement.style.marginTop = document.getElementById('marginTop').value + 'px';
-                    currentElement.style.marginRight = document.getElementById('marginRight').value + 'px';
-                    currentElement.style.marginBottom = document.getElementById('marginBottom').value + 'px';
-                    currentElement.style.marginLeft = document.getElementById('marginLeft').value + 'px';
+                    currentElement.style.setProperty('margin-top', document.getElementById('marginTop').value + 'px', 'important');
+                    currentElement.style.setProperty('margin-right', document.getElementById('marginRight').value + 'px', 'important');
+                    currentElement.style.setProperty('margin-bottom', document.getElementById('marginBottom').value + 'px', 'important');
+                    currentElement.style.setProperty('margin-left', document.getElementById('marginLeft').value + 'px', 'important');
                 } else if (document.getElementById('applyMargin')) {
-                    currentElement.style.margin = '';
+                    currentElement.style.removeProperty('margin-top');
+                    currentElement.style.removeProperty('margin-right');
+                    currentElement.style.removeProperty('margin-bottom');
+                    currentElement.style.removeProperty('margin-left');
+                    currentElement.style.removeProperty('margin');
                 }
 
                 // BORDER
                 if (document.getElementById('applyBorder') && document.getElementById('applyBorder').checked) {
-                    currentElement.style.borderWidth = document.getElementById('borderWidth').value + 'px';
-                    currentElement.style.borderColor = document.getElementById('borderColor').value;
-                    currentElement.style.borderStyle = 'solid';
-                    currentElement.style.borderRadius = document.getElementById('borderRadius').value + 'px';
+                    currentElement.style.setProperty('border-width', document.getElementById('borderWidth').value + 'px', 'important');
+                    currentElement.style.setProperty('border-color', document.getElementById('borderColor').value, 'important');
+                    currentElement.style.setProperty('border-style', 'solid', 'important');
+                    currentElement.style.setProperty('border-radius', document.getElementById('borderRadius').value + 'px', 'important');
                 } else if (document.getElementById('applyBorder')) {
-                    currentElement.style.border = '';
-                    currentElement.style.borderRadius = '';
+                    currentElement.style.removeProperty('border-width');
+                    currentElement.style.removeProperty('border-color');
+                    currentElement.style.removeProperty('border-style');
+                    currentElement.style.removeProperty('border-radius');
+                    currentElement.style.removeProperty('border');
                 }
 
                 // WIDTH
                 if (document.getElementById('applyWidth') && document.getElementById('applyWidth').checked) {
-                    currentElement.style.width = document.getElementById('editWidth').value;
+                    const widthValue = document.getElementById('editWidth').value;
+                    if (widthValue) {
+                        currentElement.style.setProperty('width', widthValue, 'important');
+                    }
                 } else if (document.getElementById('applyWidth')) {
-                    currentElement.style.width = '';
+                    currentElement.style.removeProperty('width');
                 }
 
                 closeEditPanel();
                 updateStats();
-                showToast('✅ Styles modifiés avec succès ! Aucun contenu supprimé.');
+                showToast('✅ Styles modifiés avec succès ! (!important écrasé si nécessaire)');
             } catch (error) {
                 showToast('❌ Erreur: ' + error.message, 'error');
                 console.error(error);
